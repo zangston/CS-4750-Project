@@ -92,14 +92,32 @@ VALUES
 -- insert artist release associations
 INSERT INTO releases (artist_id, release_id)
 VALUES
-    ("74XFHRwlV6OrjEM0A2NCMF", "2up3OPMp9Tb4dAKM2erWXQ"),
-    ("6HvZYsbFfjnjFrWF950C9d", "0rAaP1OBxVCn2cIUZNjGRs");
+    ("74XFHRwlV6OrjEM0A2NCMF", "6tG8sCK4htJOLjlWwb7gZB"),
+    ("74XFHRwlV6OrjEM0A2NCMF", "0w5Bdu51Ka25Pf3hojsKHh"),
+    ("74XFHRwlV6OrjEM0A2NCMF", "2RJfK2pOvGpnxC255YOy5k"),
+    ("74XFHRwlV6OrjEM0A2NCMF", "7BpYWzZwrsljT1eIjb0TqR"),
+    ("74XFHRwlV6OrjEM0A2NCMF", "74ABBu8osxqmuFOAKcWWpG"),
+    ("74XFHRwlV6OrjEM0A2NCMF", "6t44iU80A0h8WQ7vc4OoRj"),
+    ("74XFHRwlV6OrjEM0A2NCMF", "7MtlyFbHNTk0Il9wLB6kU5"),
+    ("74XFHRwlV6OrjEM0A2NCMF", "3xCsHloPBl211Yi4UEUUcm"),
+    ("74XFHRwlV6OrjEM0A2NCMF", "3WKz5JDH0St3Smips7NlOM"),
+    ("74XFHRwlV6OrjEM0A2NCMF", "27zJBz0YnuZO69U69z96vd"),
+    ("74XFHRwlV6OrjEM0A2NCMF", "50zSoW3GT1Ee4hXxQPO08t"),
+    ("74XFHRwlV6OrjEM0A2NCMF", "6RaLExL28RxCmQNUnDvUFT"),
+    ("74XFHRwlV6OrjEM0A2NCMF", "0Nt9OgNZ856RjKIPldNRf9"),
+    ("6HvZYsbFfjnjFrWF950C9d", "4N1fROq2oeyLGAlQ1C1j18"),
+    ("6HvZYsbFfjnjFrWF950C9d", "7woEDtme8YkFiWeyiinIjy"),
+    ("6HvZYsbFfjnjFrWF950C9d", "0kwrPQkiGVE8KTHalH1uMo"),
+    ("6HvZYsbFfjnjFrWF950C9d", "56v8WEnGzLByGsDAXDiv4d"),
+    ("6HvZYsbFfjnjFrWF950C9d", "02wk5BttM0QL38ERjLPQJB"),
+    ("6HvZYsbFfjnjFrWF950C9d", "1wUnuiXMMvhudmzvcCtlZP"),
+    ("6HvZYsbFfjnjFrWF950C9d", "5fpyAakgFOm4YTXkgfPzvV");
 
 -- insert user likes associations
 INSERT INTO likes (username, release_id)
 VALUES 
-    ("testuser", "2up3OPMp9Tb4dAKM2erWXQ"),
-    ("topuser", "0rAaP1OBxVCn2cIUZNjGRs");
+    ("testuser", "0w5Bdu51Ka25Pf3hojsKHh"),
+    ("topuser", "7woEDtme8YkFiWeyiinIjy");
 
 -- insert recommendation associations
 INSERT INTO recommendations (username, song_id)

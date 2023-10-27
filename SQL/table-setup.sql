@@ -62,6 +62,7 @@ CREATE TABLE song (
     year INT,
     streams INT,
     duration INT,
+    track_number INT,
     FOREIGN KEY (artist) REFERENCES artist(artist_id)
 );
 
@@ -111,6 +112,7 @@ CREATE TABLE playlist (
 CREATE TABLE playlist_songs (
     playlist_id INT,
     song_id VARCHAR(255),
+    order INT,
     FOREIGN KEY (playlist_id) REFERENCES playlist(playlist_id),
     FOREIGN KEY (song_id) REFERENCES song(song_id)
 );
@@ -129,6 +131,7 @@ CREATE TABLE playlist_songs (
 CREATE TABLE library_playlists (
     username VARCHAR(255),
     playlist_id INT,
+    order INT,
     FOREIGN KEY (username) REFERENCES user(username),
     FOREIGN KEY (playlist_id) REFERENCES playlist(playlist_id)
 );

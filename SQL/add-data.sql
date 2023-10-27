@@ -43,9 +43,26 @@ VALUES
 -- insert playlist data
 INSERT INTO playlist (playlist_id, playlist_title, owner_username, date_created, time_length)
 VALUES 
-    ("47Bg6IrMed1GPbxRgwH2aC", "MyFavPlaylist", "topuser", "2023-10-26", 0),
-    ("2ozJ8gezfHBqoxYQz7PLnM", "Mental Mingle", "testuser", "2023-10-26", 0);
+    ("47Bg6IrMed1GPbxRgwH2aC", "MyFavPlaylist", "topuser", "2023-10-26", 1345361),
+    ("2ozJ8gezfHBqoxYQz7PLnM", "Mental Mingle", "testuser", "2023-10-26", 1654984);
 
+INSERT INTO manages (username, playlist_id)
+VALUES 
+    ("topuser", "47Bg6IrMed1GPbxRgwH2aC"),
+    ("testuser", "2ozJ8gezfHBqoxYQz7PLnM");
+
+INSERT INTO playlist_songs (playlist_id, song_id, song_order)
+VALUES
+    ("2ozJ8gezfHBqoxYQz7PLnM", "6t44iU80A0h8WQ7vc4OoRj", 1),
+    ("2ozJ8gezfHBqoxYQz7PLnM", "3WKz5JDH0St3Smips7NlOM", 2),
+    ("2ozJ8gezfHBqoxYQz7PLnM", "56v8WEnGzLByGsDAXDiv4d", 3),
+    ("2ozJ8gezfHBqoxYQz7PLnM", "1wUnuiXMMvhudmzvcCtlZP", 4),
+    ("47Bg6IrMed1GPbxRgwH2aC", "5fpyAakgFOm4YTXkgfPzvV", 1),
+    ("47Bg6IrMed1GPbxRgwH2aC", "1wUnuiXMMvhudmzvcCtlZP", 2),
+    ("47Bg6IrMed1GPbxRgwH2aC", "3WKz5JDH0St3Smips7NlOM", 3),
+    ("47Bg6IrMed1GPbxRgwH2aC", "3xCsHloPBl211Yi4UEUUcm", 4),
+    ("47Bg6IrMed1GPbxRgwH2aC", "27zJBz0YnuZO69U69z96vd", 5),
+    ("47Bg6IrMed1GPbxRgwH2aC", "7BpYWzZwrsljT1eIjb0TqR", 6),
 
 -- insert album-song associations
 INSERT INTO album_has (album_id, song_id)

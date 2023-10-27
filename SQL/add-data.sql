@@ -43,26 +43,29 @@ VALUES
 -- insert playlist data
 INSERT INTO playlist (playlist_id, playlist_title, owner_username, date_created, time_length)
 VALUES 
-    ("47Bg6IrMed1GPbxRgwH2aC", "MyFavPlaylist", "topuser", "2023-10-26", 1345361),
-    ("2ozJ8gezfHBqoxYQz7PLnM", "Mental Mingle", "testuser", "2023-10-26", 1654984);
+    (1, "MyFavPlaylist", "topuser", "2023-10-26", 1345361),
+    (2, "Mental Mingle", "testuser", "2023-10-26", 1654984),
+    (3, "yo pass me the aux", "coolSongz21", "2023-10-27", 320995);
 
 INSERT INTO manages (username, playlist_id)
 VALUES 
-    ("topuser", "47Bg6IrMed1GPbxRgwH2aC"),
-    ("testuser", "2ozJ8gezfHBqoxYQz7PLnM");
+    ("topuser", 1),
+    ("testuser", 2);
 
 INSERT INTO playlist_songs (playlist_id, song_id, song_order)
 VALUES
-    ("2ozJ8gezfHBqoxYQz7PLnM", "6t44iU80A0h8WQ7vc4OoRj", 1),
-    ("2ozJ8gezfHBqoxYQz7PLnM", "3WKz5JDH0St3Smips7NlOM", 2),
-    ("2ozJ8gezfHBqoxYQz7PLnM", "56v8WEnGzLByGsDAXDiv4d", 3),
-    ("2ozJ8gezfHBqoxYQz7PLnM", "1wUnuiXMMvhudmzvcCtlZP", 4),
-    ("47Bg6IrMed1GPbxRgwH2aC", "5fpyAakgFOm4YTXkgfPzvV", 1),
-    ("47Bg6IrMed1GPbxRgwH2aC", "1wUnuiXMMvhudmzvcCtlZP", 2),
-    ("47Bg6IrMed1GPbxRgwH2aC", "3WKz5JDH0St3Smips7NlOM", 3),
-    ("47Bg6IrMed1GPbxRgwH2aC", "3xCsHloPBl211Yi4UEUUcm", 4),
-    ("47Bg6IrMed1GPbxRgwH2aC", "27zJBz0YnuZO69U69z96vd", 5),
-    ("47Bg6IrMed1GPbxRgwH2aC", "7BpYWzZwrsljT1eIjb0TqR", 6),
+    (2, "6t44iU80A0h8WQ7vc4OoRj", 1),
+    (2, "3WKz5JDH0St3Smips7NlOM", 2),
+    (2, "56v8WEnGzLByGsDAXDiv4d", 3),
+    (2, "1wUnuiXMMvhudmzvcCtlZP", 4),
+    (1, "5fpyAakgFOm4YTXkgfPzvV", 1),
+    (1, "1wUnuiXMMvhudmzvcCtlZP", 2),
+    (1, "3WKz5JDH0St3Smips7NlOM", 3),
+    (1, "3xCsHloPBl211Yi4UEUUcm", 4),
+    (1, "27zJBz0YnuZO69U69z96vd", 5),
+    (1, "7BpYWzZwrsljT1eIjb0TqR", 6),
+    (3, "2RJfK2pOvGpnxC255YOy5k", 1),
+    (3, "7woEDtme8YkFiWeyiinIjy", 2);
 
 -- insert album-song associations
 INSERT INTO album_has (album_id, song_id)
@@ -120,23 +123,22 @@ VALUES
 INSERT INTO follows (username, artist_id)
 VALUES
     ("testuser", "74XFHRwlV6OrjEM0A2NCMF"),
-    ("testuser", "6HvZYsbFfjnjFrWF950C9d"),
+    ("topuser", "6HvZYsbFfjnjFrWF950C9d"),
     ("topuser", "74XFHRwlV6OrjEM0A2NCMF"),
     ("coolSongz21", "6HvZYsbFfjnjFrWF950C9d");
 
 -- insert playlist library for user
 INSERT INTO library_playlists (username, playlist_id, playlist_order)
 VALUES
-    ("testuser", "47Bg6IrMed1GPbxRgwH2aC", 1),
-    ("testuser", "2ozJ8gezfHBqoxYQz7PLnM", 2),
-    ("coolSongz21", "47Bg6IrMed1GPbxRgwH2aC", 1),
-    ("coolSongz21", "2ozJ8gezfHBqoxYQz7PLnM", 2);
+    ("testuser", 1, 1),
+    ("topuser", 2, 1),
+    ("coolSongsz21", 3, 1);
 
 -- insert playlist library artists for user
 INSERT INTO library_artists (username, artist_id)
 VALUES
     ("testuser", "Paramore"),
-    ("testuser", "New Jeans"),    
+    ("topuser", "New Jeans"),    
     ("topuser", "Paramore"),
     ("coolSongz21", "New Jeans");           
 
@@ -156,6 +158,6 @@ VALUES
 INSERT INTO library_saved_albums (username, album_id)
 VALUES
     ("testuser", "6tG8sCK4htJOLjlWwb7gZB"),
-    ("testuser", "4N1fROq2oeyLGAlQ1C1j18"),
+    ("topuser", "6tG8sCK4htJOLjlWwb7gZB"),
     ("topuser", "4N1fROq2oeyLGAlQ1C1j18"),
     ("coolSongz21", "4N1fROq2oeyLGAlQ1C1j18");

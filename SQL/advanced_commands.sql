@@ -5,18 +5,18 @@
 -- CHECK Constraints
 
 -- prevents users from registering with a username that already exists
-ALTER TABLE user
-ADD CONSTRAINT checkUsername UNIQUE (username);
+--ALTER TABLE user
+--ADD CONSTRAINT checkUsername UNIQUE (username);   -- i just added this one manually
 
 -- requires user passwords to have at least one capital letter and at least one number
-ALTER TABLE user
-ADD CONSTRAINT checkPassword
-CHECK (password LIKE '%[A-Z]%' AND password LIKE '%[0-9]%');
+--ALTER TABLE user
+--ADD CONSTRAINT checkPassword
+--CHECK (password LIKE '%[A-Z]%' AND password LIKE '%[0-9]%');  -- this one doesn't work for some reason
 
 -- checks that artist ID and release ID conform to Spotify standards (22 characters long)
 ALTER TABLE releases
 ADD CONSTRAINT checkIdLength
-CHECK (CHAR_LENGTH(artist_id) == 22 AND CHAR_LENGTH(release_id) == 22);
+CHECK (CHAR_LENGTH(artist_id) = 22 AND CHAR_LENGTH(release_id) = 22);
 
 -- prevents users from following an artist they already follow
 ALTER TABLE follows
@@ -40,7 +40,7 @@ BEGIN
     WHERE playlist_id = new.playlist_id;
 END
 $$
-DELIMITER;
+DELIMITER ;
 
 -- update time_length on each created playlist when a user removes a song from that playlist
 DELIMITER $$
@@ -53,4 +53,4 @@ BEGIN
     WHERE playlist_id = old.playlist_id;
 END
 $$
-DELIMITER;
+DELIMITER ;

@@ -16,7 +16,7 @@ CHECK (password LIKE '%[A-Z]%' AND password LIKE '%[0-9]%');
 -- checks that artist ID and release ID conform to Spotify standards (22 characters long)
 ALTER TABLE releases
 ADD CONSTRAINT checkIdLength
-CHECK (LENGTH(artist_id) == 22 AND LENGTH(release_id) == 22);
+CHECK (CHAR_LENGTH(artist_id) == 22 AND CHAR_LENGTH(release_id) == 22);
 
 -- prevents users from following an artist they already follow
 ALTER TABLE follows
@@ -37,7 +37,7 @@ FOR EACH ROW
 BEGIN
     UPDATE playlist
     SET time_length = time_length + (SELECT duration FROM song WHERE song_id = new.song_id)
-    WHERE playlist_id = new.playlist_id
+    WHERE playlist_id = new.playlist_id;
 END
 $$
 DELIMITER;
@@ -49,8 +49,8 @@ AFTER DELETE ON playlist_songs
 FOR EACH ROW
 BEGIN
     UPDATE playlist
-    SET time_length = time_length - (SELECT duration FROM song WHERE song_id = new.song_id)
-    WHERE playlist_id = new.playlist_id
+    SET time_length = time_length - (SELECT duration FROM song WHERE song_id = old.song_id)
+    WHERE playlist_id = old.playlist_id;
 END
 $$
 DELIMITER;

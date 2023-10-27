@@ -50,7 +50,8 @@ VALUES
 INSERT INTO manages (username, playlist_id)
 VALUES 
     ("topuser", 1),
-    ("testuser", 2);
+    ("testuser", 2),
+    ("coolSongz21", 3);
 
 INSERT INTO playlist_songs (playlist_id, song_id, song_order)
 VALUES

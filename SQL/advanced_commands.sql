@@ -22,6 +22,10 @@ CHECK (LENGTH(artist_id) == 22 AND LENGTH(release_id) == 22);
 ALTER TABLE follows
 ADD CONSTRAINT checkDuplicateFollow UNIQUE (username, artist_id);
 
+-- prevents users from liking a release they already liked
+ALTER TABLE likes
+ADD CONSTRAINT checkDuplicateLike UNIQUE (username, release_id);
+
 
 -- Triggers
 

@@ -1,11 +1,11 @@
 -- create user
 INSERT INTO user (username, name, password, date_joined, streams, background_color, font_color)
 VALUES 
-    ("testuser", "Test User", "password123", "2023-10-26", 0, "FFFFFF", "000000"),
-    ("topuser", "Spotify Fanatic", "IloveSpotify", "2019-01-01", 0, "FFFFFF", "FFFFFF"),
-    ("coolSongz21", "Music Man", "songs000", "2020-01-01", 0, "FFFFFF", "FFFFFF");
+    ("testuser", "Test User", "Password123", "2023-10-26", 0, "FFFFFF", "000000"),
+    ("topuser", "Spotify Fanatic", "IloveSpotify1", "2019-01-01", 0, "FFFFFF", "FFFFFF"),
+    ("coolSongz21", "Music Man", "Songs000", "2020-01-01", 0, "FFFFFF", "FFFFFF");
 
--- test album and songs: After Laughter by Paramore
+-- test album and songs
 -- insert artist info
 INSERT INTO artist (artist_id, artist_name, spotify_followers)
 VALUES 
@@ -21,7 +21,7 @@ VALUES
 -- insert songs (god, why did i pick such a long album)
 INSERT INTO song (song_id, artist, song_title, year, streams, duration, track_number)
 VALUES
-    ("0w5Bdu51Ka25Pf3hojsKHh", "74XFHRwlV6OrjEM0A2NCMF", "Hard Times", 2017, 0, 182693, 1),
+    ("0w5Bdu51Ka25Pf3hojsKHh", "74XFHRwlV6OrjEM0A2NCMF", "Hard Times", 2017, 0, 182693, 1), -- After Laughter by Paramore
     ("2RJfK2pOvGpnxC255YOy5k", "74XFHRwlV6OrjEM0A2NCMF" , "Rose-Colored Boy", 2017, 0, 212853, 2),
     ("7BpYWzZwrsljT1eIjb0TqR", "74XFHRwlV6OrjEM0A2NCMF" , "Told You So", 2017, 0, 188946, 3),
     ("74ABBu8osxqmuFOAKcWWpG", "74XFHRwlV6OrjEM0A2NCMF" , "Forgiveness", 2017, 0, 219760, 4),
@@ -33,7 +33,7 @@ VALUES
     ("50zSoW3GT1Ee4hXxQPO08t", "74XFHRwlV6OrjEM0A2NCMF" , "Idle Worship", 2017, 0, 198413, 10),
     ("6RaLExL28RxCmQNUnDvUFT", "74XFHRwlV6OrjEM0A2NCMF" , "No Friend", 2017, 0, 203773, 11),
     ("0Nt9OgNZ856RjKIPldNRf9", "74XFHRwlV6OrjEM0A2NCMF" , "Tell Me How", 2017, 0, 260213, 12)
-    ("7woEDtme8YkFiWeyiinIjy", "6HvZYsbFfjnjFrWF950C9d" , "New Jeans", 2023, 130911645, 108142, 1),
+    ("7woEDtme8YkFiWeyiinIjy", "6HvZYsbFfjnjFrWF950C9d" , "New Jeans", 2023, 130911645, 108142, 1), -- Get Up by New Jeans
     ("0kwrPQkiGVE8KTHalH1uMo", "6HvZYsbFfjnjFrWF950C9d" , "Super Shy", 2023, 304371180, 154185, 2),
     ("56v8WEnGzLByGsDAXDiv4d", "6HvZYsbFfjnjFrWF950C9d" , "ETA", 2023, 112633677, 231851, 3),
     ("02wk5BttM0QL38ERjLPQJB", "6HvZYsbFfjnjFrWF950C9d" , "Cool With You", 2023, 89991047, 227581, 4),
@@ -55,23 +55,23 @@ VALUES
 
 INSERT INTO playlist_songs (playlist_id, song_id, song_order)
 VALUES
-    (2, "6t44iU80A0h8WQ7vc4OoRj", 1),
-    (2, "3WKz5JDH0St3Smips7NlOM", 2),
-    (2, "56v8WEnGzLByGsDAXDiv4d", 3),
-    (2, "1wUnuiXMMvhudmzvcCtlZP", 4),
     (1, "5fpyAakgFOm4YTXkgfPzvV", 1),
     (1, "1wUnuiXMMvhudmzvcCtlZP", 2),
     (1, "3WKz5JDH0St3Smips7NlOM", 3),
     (1, "3xCsHloPBl211Yi4UEUUcm", 4),
     (1, "27zJBz0YnuZO69U69z96vd", 5),
     (1, "7BpYWzZwrsljT1eIjb0TqR", 6),
+    (2, "6t44iU80A0h8WQ7vc4OoRj", 1),
+    (2, "3WKz5JDH0St3Smips7NlOM", 2),
+    (2, "56v8WEnGzLByGsDAXDiv4d", 3),
+    (2, "1wUnuiXMMvhudmzvcCtlZP", 4),
     (3, "2RJfK2pOvGpnxC255YOy5k", 1),
     (3, "7woEDtme8YkFiWeyiinIjy", 2);
 
 -- insert album-song associations
 INSERT INTO album_has (album_id, song_id)
 VALUES 
-    ("6tG8sCK4htJOLjlWwb7gZB", "0w5Bdu51Ka25Pf3hojsKHh"),
+    ("6tG8sCK4htJOLjlWwb7gZB", "0w5Bdu51Ka25Pf3hojsKHh"),   -- After Laughter by Paramore
     ("6tG8sCK4htJOLjlWwb7gZB", "2RJfK2pOvGpnxC255YOy5k"),
     ("6tG8sCK4htJOLjlWwb7gZB", "7BpYWzZwrsljT1eIjb0TqR"),
     ("6tG8sCK4htJOLjlWwb7gZB", "74ABBu8osxqmuFOAKcWWpG"),
@@ -83,7 +83,7 @@ VALUES
     ("6tG8sCK4htJOLjlWwb7gZB", "50zSoW3GT1Ee4hXxQPO08t"),
     ("6tG8sCK4htJOLjlWwb7gZB", "6RaLExL28RxCmQNUnDvUFT"),
     ("6tG8sCK4htJOLjlWwb7gZB", "0Nt9OgNZ856RjKIPldNRf9"),
-    ("4N1fROq2oeyLGAlQ1C1j18", "7woEDtme8YkFiWeyiinIjy"),
+    ("4N1fROq2oeyLGAlQ1C1j18", "7woEDtme8YkFiWeyiinIjy"),   -- Get Up by New Jeans
     ("4N1fROq2oeyLGAlQ1C1j18", "0kwrPQkiGVE8KTHalH1uMo"),
     ("4N1fROq2oeyLGAlQ1C1j18", "56v8WEnGzLByGsDAXDiv4d"),
     ("4N1fROq2oeyLGAlQ1C1j18", "02wk5BttM0QL38ERjLPQJB"),
@@ -93,8 +93,8 @@ VALUES
 -- insert artist release associations
 INSERT INTO releases (artist_id, release_id)
 VALUES
-    ("74XFHRwlV6OrjEM0A2NCMF", "6tG8sCK4htJOLjlWwb7gZB"),
-    ("74XFHRwlV6OrjEM0A2NCMF", "0w5Bdu51Ka25Pf3hojsKHh"),
+    ("74XFHRwlV6OrjEM0A2NCMF", "6tG8sCK4htJOLjlWwb7gZB"),   -- After Laughter by Paramore
+    ("74XFHRwlV6OrjEM0A2NCMF", "0w5Bdu51Ka25Pf3hojsKHh"),       -- After Laughter songs
     ("74XFHRwlV6OrjEM0A2NCMF", "2RJfK2pOvGpnxC255YOy5k"),
     ("74XFHRwlV6OrjEM0A2NCMF", "7BpYWzZwrsljT1eIjb0TqR"),
     ("74XFHRwlV6OrjEM0A2NCMF", "74ABBu8osxqmuFOAKcWWpG"),
@@ -106,8 +106,8 @@ VALUES
     ("74XFHRwlV6OrjEM0A2NCMF", "50zSoW3GT1Ee4hXxQPO08t"),
     ("74XFHRwlV6OrjEM0A2NCMF", "6RaLExL28RxCmQNUnDvUFT"),
     ("74XFHRwlV6OrjEM0A2NCMF", "0Nt9OgNZ856RjKIPldNRf9"),
-    ("6HvZYsbFfjnjFrWF950C9d", "4N1fROq2oeyLGAlQ1C1j18"),
-    ("6HvZYsbFfjnjFrWF950C9d", "7woEDtme8YkFiWeyiinIjy"),
+    ("6HvZYsbFfjnjFrWF950C9d", "4N1fROq2oeyLGAlQ1C1j18"),   -- Get Up by New Jeans
+    ("6HvZYsbFfjnjFrWF950C9d", "7woEDtme8YkFiWeyiinIjy"),       -- Get Up songs
     ("6HvZYsbFfjnjFrWF950C9d", "0kwrPQkiGVE8KTHalH1uMo"),
     ("6HvZYsbFfjnjFrWF950C9d", "56v8WEnGzLByGsDAXDiv4d"),
     ("6HvZYsbFfjnjFrWF950C9d", "02wk5BttM0QL38ERjLPQJB"),

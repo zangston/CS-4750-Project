@@ -4,6 +4,11 @@
         -- also applies to likes and library_saved_albums since likes stores both liked songs and liked albums
     -- manages and library_playlists: if we don't offer the ability to look up other users' playlists, then there's no reason to have both of these tables
 
+-- TODO:
+    -- create playlist/rename playlist/reorder playlists
+    -- change password
+    -- reorder songs within playlist??
+
 -- Lookup password given a username
 SELECT password FROM user WHERE username = username_input; -- where password_input is passed in as a parameter based on user input
     -- successful login if user's password input matches the query

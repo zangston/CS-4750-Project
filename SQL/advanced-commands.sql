@@ -4,15 +4,6 @@
 
 -- CHECK Constraints
 
--- prevents users from registering with a username that already exists
---ALTER TABLE user
---ADD CONSTRAINT checkUsername UNIQUE (username);   -- i just added this one manually
-
--- requires user passwords to have at least one capital letter and at least one number
---ALTER TABLE user
---ADD CONSTRAINT checkPassword
---CHECK (password LIKE '%[A-Z]%' AND password LIKE '%[0-9]%');  -- this one doesn't work for some reason
-
 -- checks that artist ID and release ID conform to Spotify standards (22 characters long)
 ALTER TABLE releases
 ADD CONSTRAINT checkIdLength
@@ -54,3 +45,4 @@ BEGIN
 END
 $$
 DELIMITER ;
+

@@ -43,14 +43,14 @@ VALUES
 -- insert playlist data
 INSERT INTO playlist (playlist_id, playlist_title, owner_username, date_created, time_length)
 VALUES 
-    (1, "MyFavPlaylist", "topuser", "2023-10-26", 1345361),
-    (2, "Mental Mingle", "testuser", "2023-10-26", 1654984),
+    (1, "Mental Mingle", "testuser", "2023-10-26", 1654984),
+    (2, "MyFavPlaylist", "topuser", "2023-10-26", 1345361),
     (3, "yo pass me the aux", "coolSongz21", "2023-10-27", 320995);
 
 INSERT INTO manages (username, playlist_id)
 VALUES 
-    ("topuser", 1),
-    ("testuser", 2),
+    ("testuser", 1),
+    ("topuser", 2),
     ("coolSongz21", 3);
 
 INSERT INTO playlist_songs (playlist_id, song_id, song_order)

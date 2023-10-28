@@ -2,7 +2,7 @@
 -- Including CHECK Constraints and Triggers
 
 
--- CHECK Constraints
+-- CHECK Constraints (that were not previously made/set on table creation)
 
 -- checks that artist ID and release ID conform to Spotify standards (22 characters long)
 ALTER TABLE releases

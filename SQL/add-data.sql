@@ -9,8 +9,8 @@ VALUES
 -- insert artist info
 INSERT INTO artist (artist_id, artist_name, spotify_followers)
 VALUES 
-    ("74XFHRwlV6OrjEM0A2NCMF", "Paramore", "8093430"),
-    ("6HvZYsbFfjnjFrWF950C9d", "New Jeans", "5822809");
+    ("74XFHRwlV6OrjEM0A2NCMF", "Paramore", 8093430),
+    ("6HvZYsbFfjnjFrWF950C9d", "New Jeans", 5822809);
 
 -- insert album info 
 INSERT INTO album (album_id, album_title, year, artist)
@@ -22,29 +22,29 @@ VALUES
 INSERT INTO song (song_id, artist, song_title, year, streams, duration, track_number)
 VALUES
     ("0w5Bdu51Ka25Pf3hojsKHh", "74XFHRwlV6OrjEM0A2NCMF", "Hard Times", 2017, 0, 182693, 1), -- After Laughter by Paramore
-    ("2RJfK2pOvGpnxC255YOy5k", "74XFHRwlV6OrjEM0A2NCMF" , "Rose-Colored Boy", 2017, 0, 212853, 2),
-    ("7BpYWzZwrsljT1eIjb0TqR", "74XFHRwlV6OrjEM0A2NCMF" , "Told You So", 2017, 0, 188946, 3),
-    ("74ABBu8osxqmuFOAKcWWpG", "74XFHRwlV6OrjEM0A2NCMF" , "Forgiveness", 2017, 0, 219760, 4),
-    ("6t44iU80A0h8WQ7vc4OoRj", "74XFHRwlV6OrjEM0A2NCMF" , "Fake Happy", 2017, 0, 235706, 5),
-    ("7MtlyFbHNTk0Il9wLB6kU5", "74XFHRwlV6OrjEM0A2NCMF" , "26", 2017, 0, 221720, 6),
-    ("3xCsHloPBl211Yi4UEUUcm", "74XFHRwlV6OrjEM0A2NCMF" , "Pool", 2017, 0, 232786, 7),
-    ("3WKz5JDH0St3Smips7NlOM", "74XFHRwlV6OrjEM0A2NCMF" , "Grudges", 2017, 0, 187466, 8),
-    ("27zJBz0YnuZO69U69z96vd", "74XFHRwlV6OrjEM0A2NCMF" , "Caught in the Middle", 2017, 0, 214160, 9),
-    ("50zSoW3GT1Ee4hXxQPO08t", "74XFHRwlV6OrjEM0A2NCMF" , "Idle Worship", 2017, 0, 198413, 10),
-    ("6RaLExL28RxCmQNUnDvUFT", "74XFHRwlV6OrjEM0A2NCMF" , "No Friend", 2017, 0, 203773, 11),
-    ("0Nt9OgNZ856RjKIPldNRf9", "74XFHRwlV6OrjEM0A2NCMF" , "Tell Me How", 2017, 0, 260213, 12)
-    ("7woEDtme8YkFiWeyiinIjy", "6HvZYsbFfjnjFrWF950C9d" , "New Jeans", 2023, 130911645, 108142, 1), -- Get Up by New Jeans
-    ("0kwrPQkiGVE8KTHalH1uMo", "6HvZYsbFfjnjFrWF950C9d" , "Super Shy", 2023, 304371180, 154185, 2),
-    ("56v8WEnGzLByGsDAXDiv4d", "6HvZYsbFfjnjFrWF950C9d" , "ETA", 2023, 112633677, 231851, 3),
-    ("02wk5BttM0QL38ERjLPQJB", "6HvZYsbFfjnjFrWF950C9d" , "Cool With You", 2023, 89991047, 227581, 4),
-    ("1wUnuiXMMvhudmzvcCtlZP", "6HvZYsbFfjnjFrWF950C9d" , "Get Up", 2023, 63705690, 36686, 5),
-    ("5fpyAakgFOm4YTXkgfPzvV", "6HvZYsbFfjnjFrWF950C9d" , "ASAP", 2023, 61584328, 2148794, 6);
+    ("2RJfK2pOvGpnxC255YOy5k", "74XFHRwlV6OrjEM0A2NCMF", "Rose-Colored Boy", 2017, 0, 212853, 2),
+    ("7BpYWzZwrsljT1eIjb0TqR", "74XFHRwlV6OrjEM0A2NCMF", "Told You So", 2017, 0, 188946, 3),
+    ("74ABBu8osxqmuFOAKcWWpG", "74XFHRwlV6OrjEM0A2NCMF", "Forgiveness", 2017, 0, 219760, 4),
+    ("6t44iU80A0h8WQ7vc4OoRj", "74XFHRwlV6OrjEM0A2NCMF", "Fake Happy", 2017, 0, 235706, 5),
+    ("7MtlyFbHNTk0Il9wLB6kU5", "74XFHRwlV6OrjEM0A2NCMF", "26", 2017, 0, 221720, 6),
+    ("3xCsHloPBl211Yi4UEUUcm", "74XFHRwlV6OrjEM0A2NCMF", "Pool", 2017, 0, 232786, 7),
+    ("3WKz5JDH0St3Smips7NlOM", "74XFHRwlV6OrjEM0A2NCMF", "Grudges", 2017, 0, 187466, 8),
+    ("27zJBz0YnuZO69U69z96vd", "74XFHRwlV6OrjEM0A2NCMF", "Caught in the Middle", 2017, 0, 214160, 9),
+    ("50zSoW3GT1Ee4hXxQPO08t", "74XFHRwlV6OrjEM0A2NCMF", "Idle Worship", 2017, 0, 198413, 10),
+    ("6RaLExL28RxCmQNUnDvUFT", "74XFHRwlV6OrjEM0A2NCMF", "No Friend", 2017, 0, 203773, 11),
+    ("0Nt9OgNZ856RjKIPldNRf9", "74XFHRwlV6OrjEM0A2NCMF", "Tell Me How", 2017, 0, 260213, 12)
+    ("7woEDtme8YkFiWeyiinIjy", "6HvZYsbFfjnjFrWF950C9d", "New Jeans", 2023, 0, 108142, 1), -- Get Up by New Jeans
+    ("0kwrPQkiGVE8KTHalH1uMo", "6HvZYsbFfjnjFrWF950C9d", "Super Shy", 2023, 0, 154185, 2),
+    ("56v8WEnGzLByGsDAXDiv4d", "6HvZYsbFfjnjFrWF950C9d", "ETA", 2023, 0, 231851, 3),
+    ("02wk5BttM0QL38ERjLPQJB", "6HvZYsbFfjnjFrWF950C9d", "Cool With You", 2023, 0, 227581, 4),
+    ("1wUnuiXMMvhudmzvcCtlZP", "6HvZYsbFfjnjFrWF950C9d", "Get Up", 2023, 0, 36686, 5),
+    ("5fpyAakgFOm4YTXkgfPzvV", "6HvZYsbFfjnjFrWF950C9d", "ASAP", 2023, 0, 2148794, 6);
 
 -- insert playlist data
 INSERT INTO playlist (playlist_id, playlist_title, owner_username, date_created, time_length)
 VALUES 
-    (1, "Mental Mingle", "testuser", "2023-10-26", 1654984),
-    (2, "MyFavPlaylist", "topuser", "2023-10-26", 1345361),
+    (1, "Mental Mingle", "testuser", "2023-10-26", 3008838),
+    (2, "MyFavPlaylist", "topuser", "2023-10-26", 691709),
     (3, "yo pass me the aux", "coolSongz21", "2023-10-27", 320995);
 
 INSERT INTO manages (username, playlist_id)

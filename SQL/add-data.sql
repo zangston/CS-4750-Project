@@ -32,7 +32,7 @@ VALUES
     ("27zJBz0YnuZO69U69z96vd", "74XFHRwlV6OrjEM0A2NCMF", "Caught in the Middle", 2017, 0, 214160, 9),
     ("50zSoW3GT1Ee4hXxQPO08t", "74XFHRwlV6OrjEM0A2NCMF", "Idle Worship", 2017, 0, 198413, 10),
     ("6RaLExL28RxCmQNUnDvUFT", "74XFHRwlV6OrjEM0A2NCMF", "No Friend", 2017, 0, 203773, 11),
-    ("0Nt9OgNZ856RjKIPldNRf9", "74XFHRwlV6OrjEM0A2NCMF", "Tell Me How", 2017, 0, 260213, 12)
+    ("0Nt9OgNZ856RjKIPldNRf9", "74XFHRwlV6OrjEM0A2NCMF", "Tell Me How", 2017, 0, 260213, 12),
     ("7woEDtme8YkFiWeyiinIjy", "6HvZYsbFfjnjFrWF950C9d", "New Jeans", 2023, 0, 108142, 1), -- Get Up by New Jeans
     ("0kwrPQkiGVE8KTHalH1uMo", "6HvZYsbFfjnjFrWF950C9d", "Super Shy", 2023, 0, 154185, 2),
     ("56v8WEnGzLByGsDAXDiv4d", "6HvZYsbFfjnjFrWF950C9d", "ETA", 2023, 0, 231851, 3),
@@ -151,15 +151,15 @@ INSERT INTO library_playlists (username, playlist_id, playlist_order)
 VALUES
     ("testuser", 1, 1),
     ("topuser", 2, 1),
-    ("coolSongsz21", 3, 1);
+    ("coolSongz21", 3, 1);
 
 -- insert playlist library artists for user
 INSERT INTO library_artists (username, artist_id)
 VALUES
-    ("testuser", "Paramore"),
-    ("topuser", "New Jeans"),    
-    ("topuser", "Paramore"),
-    ("coolSongz21", "New Jeans");           
+    ("testuser", "74XFHRwlV6OrjEM0A2NCMF"),
+    ("topuser", "6HvZYsbFfjnjFrWF950C9d"),    
+    ("topuser", "74XFHRwlV6OrjEM0A2NCMF"),
+    ("coolSongz21", "6HvZYsbFfjnjFrWF950C9d");           
 
 -- insert library of liked songs for user
 INSERT INTO library_liked_songs (username, song_id)

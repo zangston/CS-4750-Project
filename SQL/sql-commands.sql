@@ -1,13 +1,13 @@
--- Redundancies spotted:
-    -- follows and library_artists: if we display followed artists in library, then we can just use the first table and don't need both
-    -- likes and library_liked_songs: same thing here
-        -- also applies to likes and library_saved_albums since likes stores both liked songs and liked albums
-    -- manages and library_playlists: if we don't offer the ability to look up other users' playlists, then there's no reason to have both of these tables
 
--- TODO:
-    -- create playlist/rename playlist/reorder playlists
-    -- change password
-    -- reorder songs within playlist??
+-- create playlist
+INSERT INTO playlist (playlist_id, playlist_title, owner_username, date_created, time_length)
+VALUES (100, 'My Favorite Songs', 'username', '2023-10-27', 0);
+
+-- rename playlist
+UPDATE playlist SET playlist_title = 'New Playlist Name' WHERE playlist_id = 100;
+
+-- change password
+UPDATE user SET password = 'new_password' WHERE username = 'the_username';
 
 -- Lookup password given a username
 SELECT password FROM user WHERE username = username_input; -- where password_input is passed in as a parameter based on user input

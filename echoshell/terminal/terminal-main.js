@@ -1,9 +1,7 @@
-// Create terminal, set window size
+// Initialize terminal
 var xterm = new Terminal();
-xterm.open(document.getElementById('terminal'));
-xterm.resize(200, 40);
-xterm.write("\x1B[0;32m")   // Note: colors dictated by ANSI scheme: https://bixense.com/clicolors/ 
-xterm.write("placeholder output - welcome to echoshell \r\nEchoshell $ ")
+terminalInit(xterm);
+xterm.write("Echoshell $ ");
 
 // Terminal responses to keyboard inputs
 var currLine = "";
@@ -13,8 +11,13 @@ xterm.onKey((ev) => {
     if (ev.domEvent.key == "Enter") {
         if (currLine) {
             entries.push(currLine);
-            xterm.write("\r\nEchoshell $ ");
-            //Send cmd to backend here!
+            xterm.write("\r\n");
+
+            //Send cmd to backend parser
+            response = parseInput(currLine);
+            
+            currLine = "";
+            xterm.write(response + "\r\nEchoshell $ ");
         }
     } 
     // Backspace: move cursor backward, erase character

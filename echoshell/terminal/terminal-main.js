@@ -2,7 +2,9 @@
 var xterm = new Terminal();
 xterm.open(document.getElementById('terminal'));
 xterm.resize(200, 40);
-xterm.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ');
+//xterm.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ');
+xterm.write("\x1B[0;32m")
+xterm.write("placeholder output - welcome to echoshell \r\nEchoshell $ ")
 
 // Terminal responses to keyboard inputs
 var currLine = "";
@@ -11,7 +13,7 @@ xterm.onKey((ev) => {
     if (ev.domEvent.key == "Enter") {
         if (currLine) {
             entries.push(currLine);
-            xterm.write("\r\n");
+            xterm.write("\r\nEchoshell $ ");
             //Send cmd to backend here!
         }
     } else if (ev.domEvent.key == "Backspace") {

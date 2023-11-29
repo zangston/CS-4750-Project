@@ -16,7 +16,8 @@ xterm.onKey((ev) => {
             //Send cmd to backend parser
             response = parseInput(currLine);
             
-            xterm.write(reponse + "\r\nEchoshell $ ");
+            currLine = "";
+            xterm.write(response + "\r\nEchoshell $ ");
         }
     } 
     // Backspace: move cursor backward, erase character

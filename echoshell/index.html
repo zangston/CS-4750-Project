@@ -4,6 +4,10 @@
       margin: 0;
     }
     
+    .full-height {
+      height: 100%;
+    }
+
     @font-face {
         font-family: 'SpotifyCircular';
         src: url('assets/spotify-fonts/CircularSpotifyText-Black.otf');
@@ -18,9 +22,11 @@
         margin: 50;
     }
 
-    .full-height {
-      height: 100%;
+    #footer-text {
+      font-family: 'SpotifyCircular';
+      text-align: right;
     }
+    
 </style>
 
 <!doctype html>
@@ -37,4 +43,6 @@
         <div id="terminal"></div>
         <script src="terminal/terminal-main.js"></script>
     </body>
+    <p id="footer-text">CS 4750 Final Project</p>
+    <p id="footer-text">Built by Katie Kim, Andrew Shin, Gabriella Woo, and Winston Zhang</p>
   </html>

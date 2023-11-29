@@ -1,6 +1,7 @@
 // Initialize terminal
 var xterm = new Terminal();
 terminalInit(xterm);
+xterm.write("Echoshell $ ");
 
 // Terminal responses to keyboard inputs
 var currLine = "";
@@ -10,8 +11,12 @@ xterm.onKey((ev) => {
     if (ev.domEvent.key == "Enter") {
         if (currLine) {
             entries.push(currLine);
-            xterm.write("\r\nEchoshell $ ");
-            //Send cmd to backend here!
+            xterm.write("\r\n");
+
+            //Send cmd to backend parser
+            response = parseInput(currLine);
+            
+            xterm.write(reponse + "\r\nEchoshell $ ");
         }
     } 
     // Backspace: move cursor backward, erase character

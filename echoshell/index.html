@@ -1,9 +1,48 @@
-<html>
- <head>
- </head>
- <body>
-   Hello World
-   <h1>Hello World</h1>
-   <p>Hello World</p>
- </body>
-</html>
+<style>
+    html {
+      height: 100%;
+      margin: 0;
+    }
+    
+    .full-height {
+      height: 100%;
+    }
+
+    @font-face {
+        font-family: 'SpotifyCircular';
+        src: url('assets/spotify-fonts/CircularSpotifyText-Black.otf');
+    }
+
+    #header-text {
+      font-family: 'SpotifyCircular';
+    }
+
+    body {
+        height: 50%;
+        margin: 50;
+    }
+
+    #footer-text {
+      font-family: 'SpotifyCircular';
+      text-align: right;
+    }
+    
+</style>
+
+<!doctype html>
+  <html>
+    <title>
+        Echoshell
+    </title>
+    <head>
+        <h1 id="header-text">Echoshell: a UNIX-ified music experience</h1>
+        <link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
+        <script src="node_modules/xterm/lib/xterm.js"></script>
+    </head>
+    <body>
+        <div id="terminal"></div>
+        <script src="terminal/terminal-main.js"></script>
+    </body>
+    <p id="footer-text">CS 4750 Final Project</p>
+    <p id="footer-text">Built by Katie Kim, Andrew Shin, Gabriella Woo, and Winston Zhang</p>
+  </html>

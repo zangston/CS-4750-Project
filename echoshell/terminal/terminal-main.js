@@ -1,3 +1,6 @@
+// Initialize parser
+const p = new Parser();
+
 // Initialize terminal
 var xterm = new Terminal();
 terminalInit(xterm);
@@ -14,7 +17,7 @@ xterm.onKey((ev) => {
             xterm.write("\r\n");
 
             //Send cmd to backend parser
-            response = parseInput(currLine);
+            response = p.parseInput(currLine);
             
             currLine = "";
             xterm.write(response + "\r\nEchoshell $ ");

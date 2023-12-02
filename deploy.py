@@ -5,7 +5,7 @@ import os
 source_dir = "echoshell"
 
 # Automatically find the XAMPP htdocs directory
-possible_directories = ["/xampp/htdocs", "/xampp/xamppfiles/htdocs", "/Applications/XAMPP/htdocs"]
+possible_directories = ["/xampps/htdocs", "/xampps/xamppfiles/htdocs", "/Applications/XAMPP/htdocs","/xampp/htdocs", "/xampp/xamppfiles/htdocs"]
 xampp_htdocs = next((d for d in possible_directories if os.path.exists(d)), None)
 
 if xampp_htdocs is None:

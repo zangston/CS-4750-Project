@@ -14,7 +14,7 @@ class Parser {
 
         if(tokens[0].toLowerCase() == 'help')
         {
-            response = "help\n login\n signup\n";
+            response = "\nhelp\r\nlogin\r\nsignup\r\n";
         }
 
         if(tokens[0].toLowerCase() == 'login')

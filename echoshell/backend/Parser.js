@@ -7,40 +7,41 @@ class Parser {
 
     parseInput(input) {
         var tokens = input.split(' ');
-        var response = "Command not recognized";
+        var response = tokens[0] + " is not recognized as a command";
 
-        switch(tokens[0].toLowerCase()) {
-            case 'help':
-                response = "\r\nhelp\r\nlogin\r\nsignup\r\nlogout\n";
-                break;
-            case 'login':
-                if (!this.loggedIn) {
-                    // TODO replace this with actual login code
-                    response = "login request received";
+        if (tokens[0].toLowerCase() == 'help') {
+            response = "\nhelp\r\nlogin\r\nsignup\r\nlogout";
+        }
+
+        if (tokens[0].toLowerCase() == 'login') {
+            if (!this.loggedIn) {
+                //TODO replace this with actual login code
+                response = "login request received";
+                this.loggedIn = true;
+            } else {
+                response = "already logged in!";
+            }
+        }
+
+        if (tokens[0].toLowerCase() == 'logout') {
+            this.loggedIn = false;
+            response = "logout complete.";
+        }
+
+        if (tokens[0].toLowerCase() == 'signup') {
+            if (!this.loggedIn) {
+                if (tokens[1] && tokens[1].toLowerCase() == '-u' && tokens[3] && tokens[3].toLowerCase() == '-p' && tokens.length == 5) {
+                    var user = tokens[2];
+                    var pswd = tokens[4];
+                    //TODO: Push tuple to database
+                    response = "signup successful!";
                     this.loggedIn = true;
                 } else {
-                    response = "already logged in!";
+                    response = "signup format incorrect: aborting signup.";
                 }
-                break;
-            case 'logout':
-                this.loggedIn = false;
-                response = "logout complete.";
-                break;
-            case 'signup':
-                if (!this.loggedIn) {
-                    if(tokens[1] && tokens[1].toLowerCase() == '-u' && tokens[3] && tokens[3].toLowerCase() == '-p' && tokens.length == 5) {
-                        var user = tokens[2];
-                        var pswd = tokens[4];
-                        // TODO: Push tuple to database
-                        response = "signup successful!";
-                        this.loggedIn = true;
-                    } else {
-                        response = "signup format incorrect: aborting signup.";
-                    }
-                } else {
-                    response = "already logged in!";
-                }
-                break;
+            } else {
+                response = "already logged in!";
+            }
         }
 
         return response;

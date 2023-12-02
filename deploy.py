@@ -44,3 +44,4 @@ for file_name in os.listdir(source_dir):
         print(f"Failed to copy {source_path}. Reason: {e}")
 
 print("Deployment completed.")
+print("Access at: http://localhost/echoshell/index.html")

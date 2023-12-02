@@ -33,9 +33,16 @@ class Parser {
         {   
             if (this.loggedIn == false)
             {
-                //TODO replace this with actual signup code
-                response = "signup request recieved";
-                this.loggedIn = true;
+                if(tokens[1].toLowerCase() == '-u' && tokens[3].toLowerCase() == '-p' && tokens.length() == 5){
+                    var user = tokens[2];
+                    var pswd = tokens[4];
+                    //TODO: Push tuple to database
+                    response = "signup successful!";
+                    this.loggedIn = true;
+                }
+                else {
+                    response = "signup format incorrect: aborting signup.";
+                }
             }
             else
                 response = "already logged in!"

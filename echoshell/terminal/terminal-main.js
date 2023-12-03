@@ -9,7 +9,7 @@ xterm.write("Echoshell $ ");
 // Terminal responses to keyboard inputs
 var currLine = "";
 var entries = [];
-xterm.onKey((ev) => {
+xterm.onKey(async (ev) => {
     // Enter: create new line
     if (ev.domEvent.key == "Enter") {
         if (currLine) {
@@ -17,7 +17,7 @@ xterm.onKey((ev) => {
             xterm.write("\r\n");
 
             //Send cmd to backend parser
-            response = p.parseInput(currLine);
+            response = await p.parseInput(currLine);
             
             currLine = "";
             xterm.write(response + "\r\nEchoshell $ ");

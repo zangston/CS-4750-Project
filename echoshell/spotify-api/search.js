@@ -13,23 +13,38 @@ function searchSpotify(searchQuery, searchType) {
                 .then(data => {
                     if (searchType == 'track' && data.tracks && data.tracks.items && data.tracks.items.length > 0) {
                         console.log(data)
-                        const trackInfo = data.tracks.items[0];
-                        const artist = trackInfo.artists.map(artist => artist.name);
-                        const title = trackInfo.name;
-                        const year = new Date(trackInfo.album.release_date).getFullYear();
-                        const duration = formatDuration(trackInfo.duration_ms);
-                        const trackNumber = trackInfo.track_number;
-                        const responseString = `Artist: ${artist}, Song Title: ${title}, Year: ${year}, Track Number: #${trackNumber}, Duration: ${duration} minutes`;
+//                        const trackItems = data.tracks.items;
+                        let responseString = '';
+                        data.tracks.items.forEach(trackInfo => {
+                            const artist = trackInfo.artists.map(artist => artist.name);
+                            const title = trackInfo.name;
+                            const year = new Date(trackInfo.album.release_date).getFullYear();
+                            const duration = formatDuration(trackInfo.duration_ms);
+                            const trackNumber = trackInfo.track_number;
+                            responseString += `Artist: ${artist}, Song Title: ${title}, Year: ${year}, Track Number: #${trackNumber}, Duration: ${duration} minutes\r\n`;
+                        });
                         return responseString;
-                    } else if (searchType == 'album') {
+
+                    } else if (searchType === 'album' && data.albums && data.albums.items && data.albums.items.length > 0) {
                         console.log(data);
-                        return "Haven't done albums yet";
+//                        return "Haven't done albums yet";
+                        let responseString = '';
+                        data.albums.items.forEach(albumInfo => {
+                            const albumName = albumInfo.name;
+                            const artistName = albumInfo.artists.map(artist => artist.name);
+                            const year = new Date(albumInfo.release_date).getFullYear();
+                            responseString += `Album: ${albumName} (${year}), Artist: ${artistName}\r\n`;
+                        });
+                        return responseString;
+
                     } else if (searchType == 'artist' && data.artists && data.artists.items && data.artists.items.length > 0) {
                         console.log(data)
-                        const artistInfo = data.artists.items[0];
-                        const artistName = artistInfo.name;
-                        const followers = artistInfo.followers.total;
-                        const responseString = `Artist: ${artistName}, Followers: ${followers}`;
+                        let responseString = '';
+                        data.artists.items.forEach(artistInfo => {
+                            const artistName = artistInfo.name;
+                            const followers = artistInfo.followers.total;
+                            responseString += `Artist: ${artistName}, Followers: ${followers}\r\n`;
+                        });
                         return responseString;
                     }
                     else {

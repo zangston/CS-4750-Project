@@ -26,10 +26,12 @@ class Parser {
         var command = tokens[0]
         var response = command + " is not recognized as a command";
 
+        // Help command
         if (command.toLowerCase() == 'help') {
             response = "\nhelp\r\nlogin\r\nsignup\r\nlogout";
         }
 
+        // Login command
         if (command.toLowerCase() == 'login') {
             if (!this.loggedIn) {
                 //TODO replace this with actual login code
@@ -65,11 +67,13 @@ class Parser {
             console.log(response);
         }
 
+        // Logout command
         if (command.toLowerCase() == 'logout') {
             this.loggedIn = false;
             response = "logout complete.";
         }
 
+        // Signup command
         if (command.toLowerCase() == 'signup') {
             if (!this.loggedIn) {
                 if (tokens[1] && tokens[1].toLowerCase() == '-u' && tokens[3] && tokens[3].toLowerCase() == '-p' && tokens[5] && tokens[5].toLowerCase() == '-n' && tokens.length == 7) {
@@ -107,6 +111,7 @@ class Parser {
             }
         }
 
+        // Search command
         if (command.toLowerCase() == 'search') {
 //            if (this.loggedIn) {
             var searchQuery = ""
@@ -138,10 +143,10 @@ class Parser {
             else {
                 response = "No valid search type specified, please try again";
             }
-//            } else {
-//                response = "you're not logged in! log in first to search for songs, albums, or artists."
-//            }
         }
+//      else {
+//          response = "you're not logged in! log in first to search for songs, albums, or artists."
+//      }
       
         return Promise.resolve(response);
     }

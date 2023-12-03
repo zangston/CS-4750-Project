@@ -13,9 +13,8 @@ function searchSpotify(searchQuery, searchType) {
                 .then(data => {
                     if (searchType == 'track' && data.tracks && data.tracks.items && data.tracks.items.length > 0) {
                         console.log(data)
-//                        const trackItems = data.tracks.items;
                         let responseString = '';
-                        data.tracks.items.forEach(trackInfo => {
+                        data.tracks.items.slice(0, 5).forEach(trackInfo => {
                             const artist = trackInfo.artists.map(artist => artist.name);
                             const title = trackInfo.name;
                             const year = new Date(trackInfo.album.release_date).getFullYear();
@@ -29,7 +28,7 @@ function searchSpotify(searchQuery, searchType) {
                         console.log(data);
 //                        return "Haven't done albums yet";
                         let responseString = '';
-                        data.albums.items.forEach(albumInfo => {
+                        data.albums.items.slice(0, 5).forEach(albumInfo => {
                             const albumName = albumInfo.name;
                             const artistName = albumInfo.artists.map(artist => artist.name);
                             const year = new Date(albumInfo.release_date).getFullYear();
@@ -40,7 +39,7 @@ function searchSpotify(searchQuery, searchType) {
                     } else if (searchType == 'artist' && data.artists && data.artists.items && data.artists.items.length > 0) {
                         console.log(data)
                         let responseString = '';
-                        data.artists.items.forEach(artistInfo => {
+                        data.artists.items.slice(0, 5).forEach(artistInfo => {
                             const artistName = artistInfo.name;
                             const followers = artistInfo.followers.total;
                             responseString += `Artist: ${artistName}, Followers: ${followers}\r\n`;

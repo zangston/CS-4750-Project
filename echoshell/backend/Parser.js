@@ -50,22 +50,18 @@ class Parser {
             if (!this.loggedIn) {
                 response = 'please login'
             } else {
-                var libQuery = ""
-                for (let i = 2; i < tokens.length; i++) {
-                    libQuery += tokens[i] + '+';
-                }
-                
                 if (tokens[1] == '-songs') { // liked songs
-                    response = viewLibrary(libQuery, 'track');
+                    return viewLibrary('track', this.user)
+                    response = viewLibrary(libQuery, 'track', this.user);
                 }
                 else if (tokens[1] == '-artists') { // liked artist
-                    response = viewLibrary(libQuery, 'artists');
+                    return viewLibrary('artists', this.user);
                 }
                 else if (tokens[1] == '-albums') { // saved albums
-                    response = viewLibrary(libQuery, 'albums');
+                    return viewLibrary('albums', this.user);
                 }
                 else if (tokens[1] == '-playlists') {
-                    response = viewLibrary(libQuery, 'playlist');
+                    return viewLibrary('playlist', this.user);
                 }
                 else {
                     response = "Please specify which library you would like to view: \r\n-songs: view your liked songs\r\n-albums: view your saved albums\r\n-artists: view artists you follow\r\n-playlists: view your playlists";

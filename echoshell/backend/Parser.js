@@ -115,40 +115,40 @@ class Parser {
 
         // Search command
         if (command.toLowerCase() == 'search') {
-//            if (this.loggedIn) {
-            var searchQuery = ""
-            for (let i = 2; i < tokens.length; i++) {
-                searchQuery += tokens[i] + '+';
-            }
+            if (this.loggedIn) {
+                var searchQuery = ""
+                for (let i = 2; i < tokens.length; i++) {
+                    searchQuery += tokens[i] + '+';
+                }
 
-            if (tokens[1] == '-song') {
-                return searchSpotify(searchQuery, 'track')
-                    .then(searchResponse => {
-                        response = searchResponse;
-                        return response;
-                    });
-            }
-            else if (tokens[1] == '-album') {
-                return searchSpotify(searchQuery, 'album')
-                    .then(searchResponse => {
-                        response = searchResponse;
-                        return response;
-                    });
-            }
-            else if (tokens[1] == '-artist') {
-                return searchSpotify(searchQuery, 'artist')
-                    .then(searchResponse => {
-                        response = searchResponse;
-                        return response;
-                    });
+                if (tokens[1] == '-song') {
+                    return searchSpotify(searchQuery, 'track')
+                        .then(searchResponse => {
+                            response = searchResponse;
+                            return response;
+                        });
+                }
+                else if (tokens[1] == '-album') {
+                    return searchSpotify(searchQuery, 'album')
+                        .then(searchResponse => {
+                            response = searchResponse;
+                            return response;
+                        });
+                }
+                else if (tokens[1] == '-artist') {
+                    return searchSpotify(searchQuery, 'artist')
+                        .then(searchResponse => {
+                            response = searchResponse;
+                            return response;
+                        });
+                }
+                else {
+                    response = "No valid search type specified, please try again";
+                }
             }
             else {
-                response = "No valid search type specified, please try again";
+            response = "you're not logged in! log in first to search for songs, albums, or artists."
             }
-        }
-//      else {
-//          response = "you're not logged in! log in first to search for songs, albums, or artists."
-//      }
       
         // view library command
         if (command.toLowerCase() == 'library') {
@@ -184,7 +184,7 @@ class Parser {
                 }
             }
         }
-
+  }
         return Promise.resolve(response);
     
     }

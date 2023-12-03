@@ -17,9 +17,8 @@ xterm.onKey(async (ev) => {
             xterm.write("\r\n");
 
             //Send cmd to backend parser
-            //response = p.parseInput(currLine);
-            const response = await p.parseInput(currLine);
-
+            response = await p.parseInput(currLine);
+            
             currLine = "";
             xterm.write(response + "\r\nEchoshell $ ");
         }

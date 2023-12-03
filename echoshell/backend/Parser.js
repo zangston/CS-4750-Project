@@ -46,13 +46,19 @@ class Parser {
         }
 
         if (command.toLowerCase() == 'search') {
+            var searchQuery = ""
+            for (let i = 2; i < tokens.length; i++) {
+                searchQuery += tokens[i] + '+';
+            }
+            
             if (tokens[1] == '-song') {
-                var searchQuery = ""
-                for (let i = 2; i < tokens.length; i++) {
-                    searchQuery += tokens[i] + '+';
-                }
-
-                response = searchSong(searchQuery);
+                response = searchSpotify(searchQuery, 'track');
+            }
+            else if (tokens[1] == '-album') {
+                response = searchSpotify(searchQuery, 'album');
+            }
+            else if (tokens[1] == '-artist') {
+                response = searchSpotify(searchQuery, 'artist')
             }
             else {
                 response = "No valid search type specified, please try again";

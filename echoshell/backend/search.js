@@ -1,4 +1,4 @@
-function searchSong(searchQuery) {
+function searchSpotify(searchQuery, searchType) {
     response = ''
 
     getAccessToken()
@@ -6,7 +6,7 @@ function searchSong(searchQuery) {
       // Do something with the token
       // console.log("Token:", token);
 
-      const requestUrl = `https://api.spotify.com/v1/search?q=${searchQuery}&type=track`;
+      const requestUrl = `https://api.spotify.com/v1/search?q=${searchQuery}&type=${searchType}`;
       
       fetch(requestUrl, {
         method: 'GET',

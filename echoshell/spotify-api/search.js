@@ -24,9 +24,8 @@ function searchSpotify(searchQuery, searchType) {
                         });
                         return responseString;
 
-                    } else if (searchType === 'album' && data.albums && data.albums.items && data.albums.items.length > 0) {
+                    } else if (searchType == 'album' && data.albums && data.albums.items && data.albums.items.length > 0) {
                         console.log(data);
-//                        return "Haven't done albums yet";
                         let responseString = '';
                         data.albums.items.slice(0, 5).forEach(albumInfo => {
                             const albumName = albumInfo.name;

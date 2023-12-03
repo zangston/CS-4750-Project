@@ -48,10 +48,11 @@ class Parser {
         if (command.toLowerCase() == 'search') {
             if (tokens[1] == '-song') {
                 var searchQuery = ""
-                for (let i = 0; i < tokens.length; i++) {
-                    searchQuery =+ tokens[i] + '+';
+                for (let i = 2; i < tokens.length; i++) {
+                    searchQuery += tokens[i] + '+';
                 }
-                searchSong(searchQuery);
+
+                response = searchSong(searchQuery);
             }
             else {
                 response = "No valid search type specified, please try again";

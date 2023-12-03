@@ -45,6 +45,19 @@ class Parser {
             }
         }
 
+        if (command.toLowerCase() == 'search') {
+            if (tokens[1] == '-song') {
+                var searchQuery = ""
+                for (let i = 0; i < tokens.length; i++) {
+                    searchQuery =+ tokens[i] + '+';
+                }
+                searchSong(searchQuery);
+            }
+            else {
+                response = "No valid search type specified, please try again";
+            }
+        }
+
         return response;
     }
 }

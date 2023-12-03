@@ -35,9 +35,9 @@ class Parser {
         if (command.toLowerCase() == 'login') {
             if (!this.loggedIn) {
                 //TODO replace this with actual login code
-                if (tokens[1] && tokens[2] && tokens.length == 3){
-                    var username = tokens[1];
-                    var password = tokens[2];
+                if (tokens[1] && tokens[1].toLowerCase() == '-u' && tokens[3] && tokens[3].toLowerCase() == '-p' && tokens.length == 5){
+                    var username = tokens[2];
+                    var password = tokens[4];
                     const dataToSend = {
                         key1: username,
                         key2: password,

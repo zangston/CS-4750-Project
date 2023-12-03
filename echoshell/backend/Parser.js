@@ -150,15 +150,16 @@ class Parser {
 //          response = "you're not logged in! log in first to search for songs, albums, or artists."
 //      }
       
-
-        if (tokens[0].toLowerCase() == 'library') {
+        // view library command
+        if (command.toLowerCase() == 'library') {
             if (!this.loggedIn) {
                 response = 'please login';
             } else {
-                if (tokens[1] != "-s" || tokens[1] != "-ar" || tokens[1] != "-al" || tokens[1] != "-p" ) {
+                if (tokens.length != 2 || tokens[1] != '-s' || tokens[1] != '-al' || tokens[1] != '-ar' || tokens[1] != '-p' ||) {
                     response = "Please specify which library you would like to view: \r\n-s: view your liked songs\r\n-al: view your saved albums\r\n-ar: view artists you follow\r\n-p: view your playlists";
                 }
                 else {
+                    response = "testing 123"
                     var libType = tokens[1];
                     var username = this.user
                     const dataToSend = {

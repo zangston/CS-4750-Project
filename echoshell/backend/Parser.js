@@ -46,25 +46,41 @@ class Parser {
         }
 
         if (command.toLowerCase() == 'search') {
+//            if (this.loggedIn) {
             var searchQuery = ""
             for (let i = 2; i < tokens.length; i++) {
                 searchQuery += tokens[i] + '+';
             }
-            
+
             if (tokens[1] == '-song') {
-                response = searchSpotify(searchQuery, 'track');
+                return searchSpotify(searchQuery, 'track')
+                    .then(searchResponse => {
+                        response = searchResponse;
+                        return response; // Return the final response
+                    });
             }
             else if (tokens[1] == '-album') {
-                response = searchSpotify(searchQuery, 'album');
+                return searchSpotify(searchQuery, 'album')
+                    .then(searchResponse => {
+                        response = searchResponse;
+                        return response; // Return the final response
+                    });
             }
             else if (tokens[1] == '-artist') {
-                response = searchSpotify(searchQuery, 'artist')
+                return searchSpotify(searchQuery, 'artist')
+                    .then(searchResponse => {
+                        response = searchResponse;
+                        return response; // Return the final response
+                    });
             }
             else {
                 response = "No valid search type specified, please try again";
             }
+//            } else {
+//                response = "you're not logged in! log in first to search for songs, albums, or artists."
+//            }
         }
 
-        return response;
+        return Promise.resolve(response);
     }
 }

@@ -9,7 +9,7 @@ xterm.write("Echoshell $ ");
 // Terminal responses to keyboard inputs
 var currLine = "";
 var entries = [];
-xterm.onKey((ev) => {
+xterm.onKey(async (ev) => {
     // Enter: create new line
     if (ev.domEvent.key == "Enter") {
         if (currLine) {
@@ -17,19 +17,20 @@ xterm.onKey((ev) => {
             xterm.write("\r\n");
 
             //Send cmd to backend parser
-            response = p.parseInput(currLine);
-            
+            //response = p.parseInput(currLine);
+            const response = await p.parseInput(currLine);
+
             currLine = "";
             xterm.write(response + "\r\nEchoshell $ ");
         }
-    } 
+    }
     // Backspace: move cursor backward, erase character
     else if (ev.domEvent.key == "Backspace") {
         if (currLine) {
             currLine = currLine.slice(0, currLine.length - 1);
             xterm.write("\b \b");
         }
-    } 
+    }
     // Normal input: write character to terminal line
     else {
         currLine += ev.key

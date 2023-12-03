@@ -57,12 +57,20 @@ xterm.onKey(async (ev) => {
         xterm.write('Echoshell $ ' + currLine);
         }
     }
+    // Ignore left and right arrow inputs
+    else if (ev.domEvent.key === "ArrowLeft" || ev.domEvent.key === "ArrowRight") {            
+    }
+    else if (ev.domEvent.ctrlKey && ev.domEvent.key === 'c') {
+        xterm.write("C^\r\n")
+        xterm.write("Echoshell $ ");
+        currLine = "";
+    }
     // Normal input: write character to terminal line
     else {
         currLine += ev.key;
         xterm.write(ev.key);
     }
-});
+    });
 
 function eraseLine() {
   xterm.write("\r\x1b[K");

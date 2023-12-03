@@ -13,55 +13,55 @@ var historyIndex = 0;
 var maxHistoryIndex;
 
 xterm.onKey(async (ev) => {
-  // Enter: create new line
-  if (ev.domEvent.key === "Enter") {
-    if (currLine) {
-      entries.push(currLine);
-      historyIndex = entries.length; // Move history index to the end
-      xterm.write("\r\n");
+    // Enter: create new line
+    if (ev.domEvent.key === "Enter") {  
+        if (currLine) {
+            entries.push(currLine);
+            historyIndex = entries.length; // Move history index to the end
+            xterm.write("\r\n");
 
-      // Send cmd to backend parser
-      const response = await p.parseInput(currLine);
+        // Send cmd to backend parser
+        const response = await p.parseInput(currLine);
 
-      currLine = "";
-      xterm.write(response + "\r\nEchoshell $ ");
+        currLine = "";
+        xterm.write(response + "\r\nEchoshell $ ");
+        }
     }
-  }
-  // Backspace: move cursor backward, erase character
-  else if (ev.domEvent.key === "Backspace") {
-    if (currLine) {
-      currLine = currLine.slice(0, currLine.length - 1);
-      xterm.write("\b \b");
+    // Backspace: move cursor backward, erase character
+    else if (ev.domEvent.key === "Backspace") {
+        if (currLine) {
+        currLine = currLine.slice(0, currLine.length - 1);
+        xterm.write("\b \b");
+        }
     }
-  }
-  // Arrow Up: retrieve previous command from history
-  else if (ev.domEvent.key === "ArrowUp") {
-    if (historyIndex > 0) {
-      historyIndex--;
-      eraseLine();
-      currLine = entries[historyIndex];
-      xterm.write('Echoshell $ ' + currLine);
+    // Arrow Up: retrieve previous command from history
+    else if (ev.domEvent.key === "ArrowUp") {
+        if (historyIndex > 0) {
+        historyIndex--;
+        eraseLine();
+        currLine = entries[historyIndex];
+        xterm.write('Echoshell $ ' + currLine);
+        }
     }
-  }
-  // Arrow Down: retrieve next command from history
-  else if (ev.domEvent.key === "ArrowDown") {
-    if (historyIndex < entries.length - 1) {
-      historyIndex++;
-      eraseLine();
-      currLine = entries[historyIndex];
-      xterm.write('Echoshell $ ' + currLine);
-    } else {
-      // If at the end of history, clear the line
-      eraseLine();
-      currLine = "";
-      xterm.write('Echoshell $ ' + currLine);
+    // Arrow Down: retrieve next command from history
+    else if (ev.domEvent.key === "ArrowDown") {
+        if (historyIndex < entries.length - 1) {
+        historyIndex++;
+        eraseLine();
+        currLine = entries[historyIndex];
+        xterm.write('Echoshell $ ' + currLine);
+        } else {
+        // If at the end of history, clear the line
+        eraseLine();
+        currLine = "";
+        xterm.write('Echoshell $ ' + currLine);
+        }
     }
-  }
-  // Normal input: write character to terminal line
-  else {
-    currLine += ev.key;
-    xterm.write(ev.key);
-  }
+    // Normal input: write character to terminal line
+    else {
+        currLine += ev.key;
+        xterm.write(ev.key);
+    }
 });
 
 function eraseLine() {

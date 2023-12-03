@@ -11,17 +11,22 @@ function searchSpotify(searchQuery, searchType) {
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.tracks && data.tracks.items && data.tracks.items.length > 0) {
-                    console.log(data)
-                    const trackInfo = data.tracks.items[0];
-                    const artist = trackInfo.artists.map(artist => artist.name);
-                    const title = trackInfo.name;
-                    const year = new Date(trackInfo.album.release_date).getFullYear();
-                    const duration = formatDuration(trackInfo.duration_ms);
-                    const trackNumber = trackInfo.track_number;
-                    const responseString = `Artist: ${artist}, Song Title: ${title}, Year: ${year}, Track Number: #${trackNumber}, Duration: ${duration} minutes`;
-                    return responseString;
-                    } else {
+                    if (searchType === 'track' && data.tracks && data.tracks.items && data.tracks.items.length > 0) {
+                        console.log(data)
+                        const trackInfo = data.tracks.items[0];
+                        const artist = trackInfo.artists.map(artist => artist.name);
+                        const title = trackInfo.name;
+                        const year = new Date(trackInfo.album.release_date).getFullYear();
+                        const duration = formatDuration(trackInfo.duration_ms);
+                        const trackNumber = trackInfo.track_number;
+                        const responseString = `Artist: ${artist}, Song Title: ${title}, Year: ${year}, Track Number: #${trackNumber}, Duration: ${duration} minutes`;
+                        return responseString;
+                    } else if (searchType === 'album') {
+                        return "Haven't done albums yet";
+                    } else if (searchType === 'artist') {
+                        return "Haven't done artists yet";
+                    }
+                    else {
                         return "No results found";
                     }
                 });

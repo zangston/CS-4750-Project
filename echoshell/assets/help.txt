@@ -1,0 +1,5 @@
+help: get a list of available commands
+login: log into user account. Example usage: login -u [username] -p [password]
+signup: create a new user account. Example usage: signup -u [username] -p [password] -n [name]
+logout: log out of user account
+search: search for a song, album, or artist. Example usage: search -song/-album/-arist [search term]

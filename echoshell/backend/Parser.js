@@ -28,7 +28,7 @@ class Parser {
 
         // Help command
         if (command.toLowerCase() == 'help') {
-            response = "\nhelp\r\nlogin\r\nsignup\r\nlogout";
+            response = await readFile("assets/help.txt") + "\r\n";
         }
 
         // Login command

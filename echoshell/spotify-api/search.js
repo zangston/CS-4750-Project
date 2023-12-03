@@ -20,7 +20,7 @@ function searchSpotify(searchQuery, searchType) {
                             const year = new Date(trackInfo.album.release_date).getFullYear();
                             const duration = formatDuration(trackInfo.duration_ms);
                             const trackNumber = trackInfo.track_number;
-                            responseString += `Artist: ${artist}, Song Title: ${title}, Year: ${year}, Track Number: #${trackNumber}, Duration: ${duration} minutes\r\n`;
+                            responseString += `${artist}: ${title} (${year}), Track: #${trackNumber}, Duration: ${duration} mins\r\n`;
                         });
                         return responseString;
 
@@ -32,7 +32,7 @@ function searchSpotify(searchQuery, searchType) {
                             const albumName = albumInfo.name;
                             const artistName = albumInfo.artists.map(artist => artist.name);
                             const year = new Date(albumInfo.release_date).getFullYear();
-                            responseString += `Album: ${albumName} (${year}), Artist: ${artistName}\r\n`;
+                            responseString += `${artistName}: ${albumName} (${year})\r\n`;
                         });
                         return responseString;
 
@@ -42,7 +42,7 @@ function searchSpotify(searchQuery, searchType) {
                         data.artists.items.slice(0, 5).forEach(artistInfo => {
                             const artistName = artistInfo.name;
                             const followers = artistInfo.followers.total;
-                            responseString += `Artist: ${artistName}, Followers: ${followers}\r\n`;
+                            responseString += `${artistName}: ${followers} followers \r\n`;
                         });
                         return responseString;
 

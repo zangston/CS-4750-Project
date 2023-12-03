@@ -171,7 +171,15 @@ VALUES
     ("testuser", "3WKz5JDH0St3Smips7NlOM"),
     ("testuser", "7woEDtme8YkFiWeyiinIjy"),
     ("testuser", "5fpyAakgFOm4YTXkgfPzvV"),
-    ("testuser", "50zSoW3GT1Ee4hXxQPO08t");
+    ("testuser", "50zSoW3GT1Ee4hXxQPO08t")
+    ("user2", "0w5Bdu51Ka25Pf3hojsKHh"),
+    ("user2", "7BpYWzZwrsljT1eIjb0TqR"),
+    ("user2", "74ABBu8osxqmuFOAKcWWpG"),
+    ("user2", "3xCsHloPBl211Yi4UEUUcm"),
+    ("user2", "3WKz5JDH0St3Smips7NlOM"),
+    ("user2", "7woEDtme8YkFiWeyiinIjy"),
+    ("user2", "5fpyAakgFOm4YTXkgfPzvV"),
+    ("user2", "50zSoW3GT1Ee4hXxQPO08t");;
 
 -- insert library of saved albums for user
 INSERT INTO library_saved_albums (username, album_id)

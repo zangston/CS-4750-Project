@@ -158,18 +158,6 @@ class Parser {
                 if (tokens[1] != "-s" || tokens[1] != "-ar" || tokens[1] != "-al" || tokens[1] != "-p" ) {
                     response = "Please specify which library you would like to view: \r\n-s: view your liked songs\r\n-al: view your saved albums\r\n-ar: view artists you follow\r\n-p: view your playlists";
                 }
-                // if (tokens[1] == '-songs') { // liked songs
-                //     return viewLibrary('track', this.user)
-                // }
-                // else if (tokens[1] == '-artists') { // liked artist
-                //     return viewLibrary('artists', this.user);
-                // }
-                // else if (tokens[1] == '-albums') { // saved albums
-                //     return viewLibrary('albums', this.user);
-                // }
-                // else if (tokens[1] == '-playlists') {
-                //     return viewLibrary('playlist', this.user);
-                // }
                 else {
                     var libType = tokens[1];
                     var username = this.user

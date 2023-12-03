@@ -24,13 +24,16 @@ class Parser {
 
     async parseInput(input) {
         var tokens = input.split(' ');
-        var response = tokens[0] + " is not recognized as a command";
+        var command = tokens[0]
+        var response = command + " is not recognized as a command";
 
-        if (tokens[0].toLowerCase() == 'help') {
+        // Help command
+        if (command.toLowerCase() == 'help') {
             response = "\nhelp\r\nlogin\r\nsignup\r\nlogout";
         }
 
-        if (tokens[0].toLowerCase() == 'login') {
+        // Login command
+        if (command.toLowerCase() == 'login') {
             if (!this.loggedIn) {
                 //TODO replace this with actual login code
                 if (tokens[1] && tokens[2] && tokens.length == 3){
@@ -65,13 +68,15 @@ class Parser {
             console.log(response);
         }
 
-        if (tokens[0].toLowerCase() == 'logout') {
+        // Logout command
+        if (command.toLowerCase() == 'logout') {
             this.loggedIn = false;
             this.user = null;
             response = "logout complete.";
         }
 
-        if (tokens[0].toLowerCase() == 'signup') {
+        // Signup command
+        if (command.toLowerCase() == 'signup') {
             if (!this.loggedIn) {
                 if (tokens[1] && tokens[1].toLowerCase() == '-u' && tokens[3] && tokens[3].toLowerCase() == '-p' && tokens[5] && tokens[5].toLowerCase() == '-n' && tokens.length == 7) {
                     var user = tokens[2];
@@ -108,6 +113,43 @@ class Parser {
             }
         }
 
+        // Search command
+        if (command.toLowerCase() == 'search') {
+//            if (this.loggedIn) {
+            var searchQuery = ""
+            for (let i = 2; i < tokens.length; i++) {
+                searchQuery += tokens[i] + '+';
+            }
+
+            if (tokens[1] == '-song') {
+                return searchSpotify(searchQuery, 'track')
+                    .then(searchResponse => {
+                        response = searchResponse;
+                        return response;
+                    });
+            }
+            else if (tokens[1] == '-album') {
+                return searchSpotify(searchQuery, 'album')
+                    .then(searchResponse => {
+                        response = searchResponse;
+                        return response;
+                    });
+            }
+            else if (tokens[1] == '-artist') {
+                return searchSpotify(searchQuery, 'artist')
+                    .then(searchResponse => {
+                        response = searchResponse;
+                        return response;
+                    });
+            }
+            else {
+                response = "No valid search type specified, please try again";
+            }
+        }
+//      else {
+//          response = "you're not logged in! log in first to search for songs, albums, or artists."
+//      }
+      
 
         if (tokens[0].toLowerCase() == 'library') {
             if (!this.loggedIn) {

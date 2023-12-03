@@ -22,14 +22,14 @@ xterm.onKey(async (ev) => {
             currLine = "";
             xterm.write(response + "\r\nEchoshell $ ");
         }
-    } 
+    }
     // Backspace: move cursor backward, erase character
     else if (ev.domEvent.key == "Backspace") {
         if (currLine) {
             currLine = currLine.slice(0, currLine.length - 1);
             xterm.write("\b \b");
         }
-    } 
+    }
     // Normal input: write character to terminal line
     else {
         currLine += ev.key

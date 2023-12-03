@@ -3,6 +3,7 @@ class Parser {
 
     constructor() {
         this.loggedIn = false;
+        this.user = null;
     }
 
     parseInput(input) {
@@ -25,6 +26,7 @@ class Parser {
 
         if (tokens[0].toLowerCase() == 'logout') {
             this.loggedIn = false;
+            this.user = null;
             response = "logout complete.";
         }
 
@@ -41,6 +43,33 @@ class Parser {
                 }
             } else {
                 response = "already logged in!";
+            }
+        }
+
+        if (tokens[0].toLowerCase() == 'library') {
+            if (!this.loggedIn) {
+                response = 'please login'
+            } else {
+                var libQuery = ""
+                for (let i = 2; i < tokens.length; i++) {
+                    libQuery += tokens[i] + '+';
+                }
+                
+                if (tokens[1] == '-songs') { // liked songs
+                    response = viewLibrary(libQuery, 'track');
+                }
+                else if (tokens[1] == '-artists') { // liked artist
+                    response = viewLibrary(libQuery, 'artists');
+                }
+                else if (tokens[1] == '-albums') { // saved albums
+                    response = viewLibrary(libQuery, 'albums');
+                }
+                else if (tokens[1] == '-playlists') {
+                    response = viewLibrary(libQuery, 'playlist');
+                }
+                else {
+                    response = "Please specify which library you would like to view: \r\n-songs: view your liked songs\r\n-albums: view your saved albums\r\n-artists: view artists you follow\r\n-playlists: view your playlists";
+                }
             }
         }
 

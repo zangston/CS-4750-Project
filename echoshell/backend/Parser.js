@@ -56,21 +56,21 @@ class Parser {
                 return searchSpotify(searchQuery, 'track')
                     .then(searchResponse => {
                         response = searchResponse;
-                        return response; // Return the final response
+                        return response;
                     });
             }
             else if (tokens[1] == '-album') {
                 return searchSpotify(searchQuery, 'album')
                     .then(searchResponse => {
                         response = searchResponse;
-                        return response; // Return the final response
+                        return response;
                     });
             }
             else if (tokens[1] == '-artist') {
                 return searchSpotify(searchQuery, 'artist')
                     .then(searchResponse => {
                         response = searchResponse;
-                        return response; // Return the final response
+                        return response;
                     });
             }
             else {

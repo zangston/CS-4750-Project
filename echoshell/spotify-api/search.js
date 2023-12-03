@@ -45,6 +45,7 @@ function searchSpotify(searchQuery, searchType) {
                             responseString += `Artist: ${artistName}, Followers: ${followers}\r\n`;
                         });
                         return responseString;
+
                     }
                     else {
                         return "No results found";

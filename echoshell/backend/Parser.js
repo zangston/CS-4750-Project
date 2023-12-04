@@ -136,7 +136,7 @@ class Parser {
                     }
                 }
                 else {
-                    response = "invalid login format"
+                    response = "Invalid login format"
                 }
                 console.log(response);
                 console.log(this.loggedIn);
@@ -151,7 +151,7 @@ class Parser {
         // Logout command
         if (command.toLowerCase() == 'logout') {
             this.loggedIn = false;
-            response = "logout complete.";
+            response = "Logout complete.";
         }
 
         // Signup command
@@ -185,10 +185,10 @@ class Parser {
                     response = "Welcome " + user + "!";
                     this.loggedIn = true;
                 } else {
-                    response = "signup format incorrect: aborting signup.";
+                    response = "Signup format incorrect: aborting signup.";
                 }
             } else {
-                response = "already logged in!";
+                response = "Already logged in!";
             }
         }
 
@@ -226,9 +226,51 @@ class Parser {
                 }
             }
             else {
-            response = "you're not logged in! log in first to search for songs, albums, or artists."
+                response = "You're not logged in! Log in first to search for songs, albums, or artists."
             }
         }
+
+        // Like/Unlike songs command
+        if (command.toLowerCase() == 'like' || command.toLowerCase() == 'unlike') {
+            if (this.loggedIn) {
+                if (tokens[1] && tokens[1].toLowerCase() == '-song') {
+                    var username = this.user;
+                    var songTitle = tokens.slice(2).join(' ').toLowerCase()
+                    console.log(username);
+                    console.log(songTitle);
+                    const dataToSend = {
+                        key1: username,
+                        key2: songTitle,
+                        key3: command
+                      };
+                    fetch('backend/like.php', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dataToSend)
+                      })
+                        .then(response => response.json())
+                        .then(data => {
+                          // Handle the response from the PHP backend
+                          console.log(data);
+                        })
+                        .catch(error => {
+                          console.error('Error:', error);
+                        });
+                    if (command.toLowerCase() == 'like') {
+                        response = "Song added to liked songs!";
+                    } else if (command.toLowerCase() == 'unlike') {
+                        response = "Song removed from liked songs!";
+                    }
+                } else {
+                    response = "Format incorrect. Use this format to like songs: like -song [song_title]";
+                }
+            } else {
+                response = "You're not logged in! Log in first to like songs."
+            }
+        }
+
         return Promise.resolve(response);
     }
 }

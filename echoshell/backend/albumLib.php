@@ -3,7 +3,7 @@ session_start();
 include '../connect-db.php';
 global $db;
 
-
+$user = $_SESSION['currUser'];
 function getLib($username) {
     global $db;
 
@@ -24,7 +24,6 @@ function getLib($username) {
     $statement->closeCursor();
     return $library;
 }
-$user = $data['key1'];
 
 $result = getLib($user);
 

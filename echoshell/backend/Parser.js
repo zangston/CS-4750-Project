@@ -395,6 +395,47 @@ class Parser {
             }
         }
 
+        // follow / unfollow artist command
+        if (command.toLowerCase() == 'follow' || command.toLowerCase() == 'unfollow') {
+            if (this.loggedIn) {
+                if (tokens[1] && tokens[1].toLowerCase() == '-artist') {
+                    var username = this.user;
+                    var artistName = tokens.slice(2).join(' ').toLowerCase()
+                    console.log(username);
+                    console.log(artistName);
+                    const dataToSend = {
+                        key1: username,
+                        key2: artistName,
+                        key3: command
+                      };
+                    fetch('backend/follow.php', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dataToSend)
+                      })
+                        .then(response => response.json())
+                        .then(data => {
+                          // Handle the response from the PHP backend
+                          console.log(data);
+                        })
+                        .catch(error => {
+                          console.error('Error:', error);
+                        });
+                    if (command.toLowerCase() == 'follow') {
+                        response = "Now following " + artistName + "!";
+                    } else if (command.toLowerCase() == 'unlike') {
+                        response = "Unfollowed " + artistName + "!";
+                    }
+                } else {
+                    response = "Format incorrect. Use this format to follow artists: follow -artist [artist_name]";
+                }
+            } else {
+                response = "You're not logged in! Log in first to follow artists."
+            }
+        }
+
         // view library command
         if (command.toLowerCase() == 'library') {
             if (this.loggedIn) {

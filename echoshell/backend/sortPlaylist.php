@@ -1,13 +1,11 @@
 <?php
-session_start(); 
+session_start();
 include '../connect-db.php';
 global $db;
-global $created;
 
 $user = $_SESSION['currUser'];
-function getSongsInPlaylist($playlistName) {
-    global $db; 
-
+function sortPlaylist($playlistName){
+    global $db;
     $queryPL = "SELECT playlist_id FROM playlist WHERE playlist_title = :playlistTitle AND owner_username = :ownerUsername";
     $statementPlaylist = $db->prepare($queryPL);
     $statementPlaylist->bindParam(':playlistTitle', $playlistName);
@@ -15,8 +13,8 @@ function getSongsInPlaylist($playlistName) {
     $statementPlaylist->execute();
     $playlistID = $statementPlaylist->fetchColumn();
 
-    if ($playlistID) {
-        $query = "SELECT song_name FROM playlist_songs WHERE playlist_id = :playlistID";
+    if ($playlistID){
+        $query = "SELECT song_name FROM playlist_songs WHERE playlist_id = :playlistID ORDER BY song_name ASC";
         $statement = $db->prepare($query);
         $statement->bindParam(':playlistID', $playlistID);
         $statement->execute();
@@ -28,7 +26,7 @@ function getSongsInPlaylist($playlistName) {
         $statement->closeCursor();
         return $playlists;
     }
-    return false; 
+    return false;
 }
 
 $jsonData = file_get_contents('php://input');
@@ -36,12 +34,13 @@ $jsonData = file_get_contents('php://input');
 // Decode the JSON data
 $data = json_decode($jsonData, true);
 
-$playlistName = $data['key1'];
 
-$result = getSongsInPlaylist($playlistName);
+$pName = $data['key1'];
+
+$output = sortPlaylist($pName);
 
 $responseData = array(
-    'playlists' => $result
+    'playlists' => $output
 );
 
 header('Content-Type: application/json');

@@ -7,7 +7,7 @@ class Parser {
         this.currPlay = "";
     }
 
-    async loginhelper(dataToSend,username){
+    async loginhelper(dataToSend){
         let response = await fetch('backend/login.php', {
         method: 'POST',
         headers: {
@@ -125,6 +125,19 @@ class Parser {
         return array
     }
 
+    async playlistSortHelper(dataToSend){
+        let response = await fetch('backend/sortPlaylist.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var array = data.playlists;
+        return array
+    }
 
     async parseInput(input) {
         var tokens = input.split(' ');
@@ -201,6 +214,14 @@ class Parser {
         if (this.selected){
             if (tokens[0] && tokens[0] == "add" && tokens[1]){
                 var songName = tokens[1];
+                for (let i = 2; i < 100; i++){
+                    if (tokens[i]){
+                        songName = songName + " " + tokens[i];
+                    }
+                    else{
+                        break;
+                    }
+                }
                 const dataToSend = {
                     key1: songName,
                     key2: this.currPlay
@@ -215,6 +236,14 @@ class Parser {
             }
             if (tokens[0] && tokens[0] == "view"){
                 var playlistName = tokens[1];
+                for (let i = 2; i < 100; i++){
+                    if (tokens[i]){
+                        songName = songName + " " + tokens[i];
+                    }
+                    else{
+                        break;
+                    }
+                }
                 const dataToSend = {
                     key1: this.currPlay,
                 };
@@ -236,7 +265,7 @@ class Parser {
                     response = "Song: " + songName + " has been removed from " + this.currPlay + ".";
                 }
                 else {
-                    response = "Song failed to add."
+                    response = "Song failed to delete."
                 }
             }
             if (tokens[0] && tokens[0] == "rename" && tokens[1]){
@@ -253,6 +282,17 @@ class Parser {
                 else {
                     response = "Renaming process failed."
                 }
+            }
+            if (tokens[0] && tokens[0] == "sort"){
+                const dataToSend = {
+                    key1: this.currPlay
+                };
+                var array = await this.playlistSortHelper(dataToSend);
+                var output = "";
+                for (let x in array){
+                    output += array[x]+"\r\n";
+                }
+                response = output;
             }
         } 
 
@@ -271,7 +311,7 @@ class Parser {
                     
                     console.log(response);
                     console.log(this.loggedIn);
-                    await this.loginhelper(dataToSend,username);
+                    await this.loginhelper(dataToSend);
                     if (this.loggedIn){
                         response = "Welcome Back, " + username + "!";
                     }

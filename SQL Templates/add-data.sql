@@ -179,7 +179,7 @@ VALUES
     ("user2", "3WKz5JDH0St3Smips7NlOM"),
     ("user2", "7woEDtme8YkFiWeyiinIjy"),
     ("user2", "5fpyAakgFOm4YTXkgfPzvV"),
-    ("user2", "50zSoW3GT1Ee4hXxQPO08t");;
+    ("user2", "50zSoW3GT1Ee4hXxQPO08t");
 
 -- insert library of saved albums for user
 INSERT INTO library_saved_albums (username, album_id)

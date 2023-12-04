@@ -23,6 +23,20 @@ class Parser {
         console.log(response);
     }
 
+    async viewLibHelper(dataToSend) {
+        let response = await fetch('backend/get-library.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+                })
+            let data = await response.json();
+            console.log(data);
+            var array = data.library;
+            return array
+    }
+
     async parseInput(input) {
         var tokens = input.split(' ');
         var command = tokens[0]
@@ -192,37 +206,61 @@ class Parser {
             }
         }
 
+
+        // if (tokens[1] && tokens[1] == "ls" && tokens.length == 2){
+        //     const dataToSend = {
+        //         key1: "username",
+        //     };
+        //     var array = await this.playlistDisplayHelper(dataToSend);
+        //     var output = "";
+        //     for (let x in array){
+        //         output += array[x]+"\r\n";
+        //     }
+        //     response = output;
+        // }
+
         // view library command
         if (command.toLowerCase() == 'library') {
             if (!this.loggedIn) {
                 response = 'please login';
             } else {
-                if (tokens.length != 2 || tokens[1] != '-s' || tokens[1] != '-al' || tokens[1] != '-ar' || tokens[1] != '-p') {
-                    response = "Please specify which library you would like to view: \r\n-s: view your liked songs\r\n-al: view your saved albums\r\n-ar: view artists you follow\r\n-p: view your playlists";
-                }
-                else {
-                    response = "testing 123"
-                    var libType = tokens[1];
-                    var username = this.user
+                if (tokens.length == 2 && (tokens[1].toLowerCase() == '-s' || tokens[1].toLowerCase() == '-al' || tokens[1].toLowerCase() == '-ar' || tokens[1].toLowerCase() == '-p')) {
+                    response = "testing 123";
+                    // var libType = tokens[1];
+                    // var username = this.user
+                    // console.log(libType);
+                    // console.log(username);
                     const dataToSend = {
                         key1: libType,
                         key2: username
                     };
-                    fetch('backend/get-library.php', {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(dataToSend)
-                      })
-                        .then(response => response.json())
-                        .then(data => {
-                          // Handle the response from the PHP backend
-                          console.log(data);
-                        })
-                        .catch(error => {
-                          console.error('Error:', error);
-                        });
+                    var array = await this.viewLibHelper(dataToSend);
+                    var output = "";
+                    for (let x in array) {
+                        output += array[x] + "\r\n";
+                    }
+                    response = output;
+                    // fetch('backend/get-library.php', {
+                    //     method: 'GET',
+                    //     headers: {
+                    //         'Content-Type': 'application/json'
+                    //     },
+                    //     body: JSON.stringify(dataToSend)
+                    //     })
+                    //     .then(response => response.json())
+                    //     .then(data => {
+                    //         // Handle the response from the PHP backend
+                    //         console.log(data);
+                    //         let libList = data;
+
+                    //     })
+                    //     .catch(error => {
+                    //         console.error('Error:', error);
+                    //     });
+                    // response = "the end";
+                }
+                else {
+                    response = "Please specify which library you would like to view: \r\n-s: view your liked songs\r\n-al: view your saved albums\r\n-ar: view artists you follow\r\n-p: view your playlists";
                 }
             }
         }

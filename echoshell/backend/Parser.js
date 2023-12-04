@@ -23,7 +23,7 @@ class Parser {
         console.log(response);
     }
 
-    async parseInput(input) {
+    async parseInput(input, xterm) {
         var tokens = input.split(' ');
         var command = tokens[0]
         var response = command + " is not recognized as a command";
@@ -189,6 +189,20 @@ class Parser {
                 }
             } else {
                 response = "You're not logged in! Log in first to like songs."
+            }
+        }
+
+        if (command.toLowerCase() == 'customize') {
+            if(this.loggedIn) {
+                response = customizeDialogue(tokens[1]);
+                
+
+
+
+                response += "Font color changed\r\n"
+            }
+            else {
+                response = "Not logged in! Log in first to customize font color"
             }
         }
 

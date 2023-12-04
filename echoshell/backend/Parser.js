@@ -5,6 +5,7 @@ class Parser {
         this.loggedIn = false;
         this.selected = false;
         this.currPlay = "";
+        this.user = "";
     }
 
     async loginhelper(dataToSend,username){
@@ -286,6 +287,7 @@ class Parser {
                     console.log(this.loggedIn);
                     await this.loginhelper(dataToSend,username);
                     if (this.loggedIn){
+                        this.user = username;
                         var color_name = await this.colorHelper(dataToSend);
                         color_code = encodeColor(color_name.replace(/"/g, ''));
                         response = color_code + "Welcome Back, " + username + "!";

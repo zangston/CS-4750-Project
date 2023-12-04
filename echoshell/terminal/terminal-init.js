@@ -6,5 +6,6 @@ function terminalInit(xterm) {
     xterm.write("Welcome to Echoshell!\r\n\r\n");
     xterm.write("Login with your credentials or signup to create an account.\r\n");
     xterm.write("Signup example: signup -u username -p password -n name\r\n");
-    xterm.write("Login example: login -u username -p password\r\n\r\n");
+    xterm.write("Login example: login -u username -p password\r\n");
+    xterm.write("If you want to add a song to your playlist, search it first!\r\n\r\n");
 }

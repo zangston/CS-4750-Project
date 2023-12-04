@@ -4,6 +4,7 @@ class Parser {
     constructor() {
         this.loggedIn = false;
         this.selected = false;
+        this.currPlay = "";
     }
 
     async loginhelper(dataToSend,username){
@@ -52,6 +53,36 @@ class Parser {
         return array
     }
 
+    //helper function for displaying playlists
+    async cdHelper(dataToSend){
+        let response = await fetch('backend/cd.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var number = data.number;
+        return number
+    }
+
+    //helper function for displaying playlists
+    async cdHelper(dataToSend){
+        let response = await fetch('backend/cd.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var number = data.number;
+        return number
+    }
+
     async parseInput(input) {
         var tokens = input.split(' ');
         var command = tokens[0]
@@ -89,21 +120,51 @@ class Parser {
                     response = output;
                 }
 
-                if (tokens[1] && tokens[1] == "cd" && tokens[2]){
-
-
-                    if (tokens[0] && tokens[0] == "add" && tokens[1]){
-                    
+                if (tokens[1] && tokens[1] == "cd" && tokens[2] && tokens.length == 3){
+                    if (!this.selected){
+                        var playlistName = tokens[2];
+                        const dataToSend = {
+                            key1: playlistName,
+                        };
+                        var numPlaylist = await this.cdHelper(dataToSend);
+                        if (!numPlaylist){
+                            response = "You cannot cd into a playlist that doesn't exist.";
+                        }
+                        else {
+                            this.selected = true;
+                            this.currPlay = playlistName;
+                            response = "Successfully cd'd into " + playlistName;
+                        }
                     }
-                    if (tokens[0] && tokens[0] == "view" && tokens[1]){
+                    else{
+                        if (tokens[2] == ".."){
+                            this.selected = false;
+                            this.currPlay = "";
+                            response = "Successfully exited playlist.";
+                        }
+                        else{
+                            response = "You cannot cd while in a playlist.";
+                        }    
+                    }
+                    if (this.selected){
+                        if (tokens[1] && tokens[1] == "add" && tokens[2]){
                         
-                    }
-                    if (tokens[0] && tokens[0] == "delete" && tokens[1]){
-                        
-                    }
-                    if (tokens[0] && tokens[0] == "rename" && tokens[1]){
-                        
-                    }
+                        }
+                        if (tokens[1] && tokens[1] == "view" && tokens[2]){
+                            
+                        }
+                        if (tokens[1] && tokens[1] == "delete" && tokens[2]){
+                            
+                        }
+                        if (tokens[1] && tokens[1] == "rename" && tokens[2]){
+                            var newName = tokens[2];
+                            const dataToSend = {
+                            key1: newName,
+                            key2: this.currPlay
+                        };
+                        var numPlaylist = await this.cdHelper(dataToSend);
+                        }
+                    }    
                 }
                 
             }

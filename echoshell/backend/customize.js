@@ -1,4 +1,4 @@
-function customizeDialogue(color) {
+function encodeColor(color) {
     if (color == 'red')
         return '\x1b[1;31m';
     if (color == 'green')

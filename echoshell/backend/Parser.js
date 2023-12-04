@@ -194,7 +194,7 @@ class Parser {
 
         if (command.toLowerCase() == 'customize') {
             if(this.loggedIn) {
-                var color = customizeDialogue(tokens[1].toLowerCase());
+                var color = tokens[1].toLowerCase();
                 
                 const dataToSend = {
                     key1: this.user,
@@ -207,17 +207,10 @@ class Parser {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(dataToSend)
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Handle the response from the PHP backend
-                        console.log(data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+                });
 
-                response = color + "Font color changed\r\n"
+                var color_code = encodeColor(color.toLowerCase());
+                response = color_code + "Font color changed\r\n"
             }
             else {
                 response = "Not logged in! Log in first to customize font color"

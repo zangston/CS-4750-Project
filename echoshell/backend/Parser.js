@@ -37,6 +37,66 @@ class Parser {
         return color_name;
     }
   
+    // display liked songs
+    async songLibHelper(dataToSend) {
+        let response = await fetch('backend/songLib.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+                })
+            let data = await response.json();
+            console.log(data);
+            var array = data.library;
+            return array
+    }
+
+    // display saved albums
+    async albumLibHelper(dataToSend) {
+        let response = await fetch('backend/albumLib.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+                })
+            let data = await response.json();
+            console.log(data);
+            var array = data.library;
+            return array
+    }
+
+    // display liked artists
+    async artistLibHelper(dataToSend) {
+        let response = await fetch('backend/artistLib.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+                })
+            let data = await response.json();
+            console.log(data);
+            var array = data.library;
+            return array
+    }
+
+    // display playlists
+    async playlistLibHelper(dataToSend) {
+        let response = await fetch('backend/playlistLib.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+                })
+            let data = await response.json();
+            console.log(data);
+            var array = data.library;
+            return array
+    }
+
     //helper function for creating playlist
     async playlistCreateHelper(dataToSend){
         let response = await fetch('backend/playlistCreate.php', {
@@ -352,6 +412,7 @@ class Parser {
         // Logout command
         if (command.toLowerCase() == 'logout') {
             this.loggedIn = false;
+            this.user = "";
             response = "\x1b[0;32mLogout complete.";
         }
 
@@ -468,9 +529,105 @@ class Parser {
                     response = "Format incorrect. Use this format to like songs: like -song [song_title]";
                 }
             } else {
-                response = "You're not logged in! Log in first to like songs."
+                response = "You're not logged in! Log in first to like songs.";
             }
         }
+
+        // follow / unfollow artist command
+        if (command.toLowerCase() == 'follow' || command.toLowerCase() == 'unfollow') {
+            if (this.loggedIn) {
+                if (tokens[1] && tokens[1].toLowerCase() == '-artist') {
+                    var username = this.user;
+                    var artistName = tokens.slice(2).join(' ').toLowerCase();
+                    console.log(username);
+                    console.log(artistName);
+                    const dataToSend = {
+                        key1: username,
+                        key2: artistName,
+                        key3: command
+                      };
+                    fetch('backend/follow.php', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dataToSend)
+                      })
+                        .then(response => response.json())
+                        .then(data => {
+                          // Handle the response from the PHP backend
+                          console.log(data);
+                        })
+                        .catch(error => {
+                          console.error('Error:', error);
+                        });
+                    if (command.toLowerCase() == 'follow') {
+                        response = "Now following " + artistName + "!";
+                    } else if (command.toLowerCase() == 'unfollow') {
+                        response = "Unfollowed " + artistName + "!";
+                    }
+                } else {
+                    response = "Format incorrect. Use this format to follow artists: follow -artist [artist_name]";
+                }
+            } else {
+                response = "You're not logged in! Log in first to follow artists.";
+            }
+        }
+
+        // view library command
+        if (command.toLowerCase() == 'library') {
+            if (this.loggedIn) {
+                var currUser = this.user;
+                console.log(currUser);
+                if (tokens[1].toLowerCase() == '-s' && tokens.length == 2) {
+                    const dataToSend = {
+                        key1: currUser
+                    };
+                    var array = await this.songLibHelper(dataToSend);
+                    var output = "";
+                    for (let x in array) {
+                        output += array[x] + "\r\n";
+                    }
+                    response = output;
+                } else if (tokens[1].toLowerCase() == '-al' && tokens.length == 2) {
+                    const dataToSend = {
+                        key1: currUser
+                    };
+                    var array = await this.albumLibHelper(dataToSend);
+                    var output = "";
+                    for (let x in array) {
+                        output += array[x] + "\r\n";
+                    }
+                    response = output;
+                } else if (tokens[1].toLowerCase() == '-ar' && tokens.length == 2) {
+                    const dataToSend = {
+                        key1: currUser
+                    };
+                    var array = await this.artistLibHelper(dataToSend);
+                    var output = "";
+                    for (let x in array) {
+                        output += array[x] + "\r\n";
+                    }
+                    response = output;
+                } else if (tokens[1].toLowerCase() == '-p' && tokens.length == 2) {
+                    const dataToSend = {
+                        key1: "username"
+                    };
+                    var array = await this.playlistDisplayHelper(dataToSend);
+                    var output = "";
+                    for (let x in array) {
+                        output += array[x] + "\r\n";
+                    }
+                    response = output;
+                } else {
+                    response = "Please specify which library you would like to view: \r\n-s: view your liked songs\r\n-al: view your saved albums\r\n-ar: view artists you follow\r\n-p: view your playlists";
+                }
+            } else {
+                response = 'Please login';
+            }
+        }
+
+
 
         // Save/Unsave songs command
         if (command.toLowerCase() == 'save' || command.toLowerCase() == 'unsave') {

@@ -391,7 +391,7 @@ class Parser {
                     response = "Format incorrect. Use this format to like songs: like -song [song_title]";
                 }
             } else {
-                response = "You're not logged in! Log in first to like songs."
+                response = "You're not logged in! Log in first to like songs.";
             }
         }
 
@@ -400,7 +400,7 @@ class Parser {
             if (this.loggedIn) {
                 if (tokens[1] && tokens[1].toLowerCase() == '-artist') {
                     var username = this.user;
-                    var artistName = tokens.slice(2).join(' ').toLowerCase()
+                    var artistName = tokens.slice(2).join(' ').toLowerCase();
                     console.log(username);
                     console.log(artistName);
                     const dataToSend = {
@@ -425,14 +425,14 @@ class Parser {
                         });
                     if (command.toLowerCase() == 'follow') {
                         response = "Now following " + artistName + "!";
-                    } else if (command.toLowerCase() == 'unlike') {
+                    } else if (command.toLowerCase() == 'unfollow') {
                         response = "Unfollowed " + artistName + "!";
                     }
                 } else {
                     response = "Format incorrect. Use this format to follow artists: follow -artist [artist_name]";
                 }
             } else {
-                response = "You're not logged in! Log in first to follow artists."
+                response = "You're not logged in! Log in first to follow artists.";
             }
         }
 

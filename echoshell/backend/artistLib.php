@@ -18,7 +18,7 @@ function getLib($username) {
     $library = array(); 
 
     while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-        $library[] = $row['artist_id']; 
+        $library[] = $row['artist_name']; 
     }
 
     $statement->closeCursor();

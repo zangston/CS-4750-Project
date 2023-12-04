@@ -5,6 +5,7 @@ class Parser {
         this.loggedIn = false;
         this.selected = false;
         this.currPlay = "";
+        this.user = "";
     }
 
     async loginhelper(dataToSend){
@@ -22,7 +23,20 @@ class Parser {
         console.log(this.loggedIn);
         console.log(response);
     }
-
+  
+    async colorHelper(dataToSend){
+        let response = await fetch('backend/getColor.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        var color_name = JSON.stringify(data.color);
+        return color_name;
+    }
+  
     //helper function for creating playlist
     async playlistCreateHelper(dataToSend){
         let response = await fetch('backend/playlistCreate.php', {
@@ -313,7 +327,10 @@ class Parser {
                     console.log(this.loggedIn);
                     await this.loginhelper(dataToSend);
                     if (this.loggedIn){
-                        response = "Welcome Back, " + username + "!";
+                        this.user = username;
+                        var color_name = await this.colorHelper(dataToSend);
+                        color_code = encodeColor(color_name.replace(/"/g, ''));
+                        response = color_code + "Welcome Back, " + username + "!";
                     }
                     else{
                         response = "Stop hacking me.";
@@ -335,7 +352,7 @@ class Parser {
         // Logout command
         if (command.toLowerCase() == 'logout') {
             this.loggedIn = false;
-            response = "Logout complete.";
+            response = "\x1b[0;32mLogout complete.";
         }
 
         // Signup command
@@ -452,6 +469,73 @@ class Parser {
                 }
             } else {
                 response = "You're not logged in! Log in first to like songs."
+            }
+        }
+
+        // Save/Unsave songs command
+        if (command.toLowerCase() == 'save' || command.toLowerCase() == 'unsave') {
+            if (this.loggedIn) {
+                if (tokens[1] && tokens[1].toLowerCase() == '-album') {
+                    var username = this.user;
+                    var albumTitle = tokens.slice(2).join(' ').toLowerCase()
+                    console.log(username);
+                    console.log(albumTitle);
+                    const dataToSend = {
+                        key1: username,
+                        key2: albumTitle,
+                        key3: command
+                      };
+                    fetch('backend/save.php', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dataToSend)
+                      })
+                        .then(response => response.json())
+                        .then(data => {
+                          // Handle the response from the PHP backend
+                          console.log(data);
+                        })
+                        .catch(error => {
+                          console.error('Error:', error);
+                        });
+                    if (command.toLowerCase() == 'save') {
+                        response = "Album added to saved albums!";
+                    } else if (command.toLowerCase() == 'unsave') {
+                        response = "Album removed from saved albums!";
+                    }
+                } else {
+                    response = "Format incorrect. Use this format to save albums: save -album [album_title]";
+                }
+            } else {
+                response = "You're not logged in! Log in first to save albums."
+            }
+        }
+
+        // Customize font color
+        if (command.toLowerCase() == 'customize') {
+            if(this.loggedIn) {
+                var color = tokens[1].toLowerCase();
+                
+                const dataToSend = {
+                    key1: this.user,
+                    key2: color,
+                    };
+
+                fetch('backend/customize.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dataToSend)
+                });
+
+                var color_code = encodeColor(color.toLowerCase());
+                response = color_code + "Font color changed\r\n"
+            }
+            else {
+                response = "Not logged in! Log in first to customize font color"
             }
         }
 

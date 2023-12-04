@@ -3,7 +3,7 @@
 
 -- user(username, name, password, date_joined, streams, background_color, font_color)
 CREATE TABLE user (
-    username VARCHAR(255) PRIMARY KEY,
+    DISTINCT username VARCHAR(255) PRIMARY KEY,
     name VARCHAR(255),
     password VARCHAR(255),
     date_joined DATE,
@@ -44,7 +44,7 @@ CREATE TABLE likes (
 
 -- playlist(playlist_id, playlist_title, owner_username, date_created, time_length, song_titles)
 CREATE TABLE playlist (
-    playlist_id INT PRIMARY KEY,
+    playlist_id INT PRIMARY KEY AUTO_INCREMENT,
     playlist_title VARCHAR(255),
     owner_username VARCHAR(255),
     date_created DATE,

@@ -3,9 +3,10 @@ class Parser {
 
     constructor() {
         this.loggedIn = false;
+        this.selected = false;
     }
 
-    async helper(dataToSend,username){
+    async loginhelper(dataToSend,username){
         let response = await fetch('backend/login.php', {
         method: 'POST',
         headers: {
@@ -21,6 +22,36 @@ class Parser {
         console.log(response);
     }
 
+    //helper function for creating playlist
+    async playlistCreateHelper(dataToSend){
+        let response = await fetch('backend/playlistCreate.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var checking = data.status;
+        return checking
+    }
+
+    //helper function for displaying playlists
+    async playlistDisplayHelper(dataToSend){
+        let response = await fetch('backend/playlistDisplay.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var array = data.playlists;
+        return array
+    }
+
     async parseInput(input) {
         var tokens = input.split(' ');
         var command = tokens[0]
@@ -29,6 +60,56 @@ class Parser {
         // Help command
         if (command.toLowerCase() == 'help') {
             response = await readFile("assets/help.txt") + "\r\n";
+        }
+        
+        if (command.toLowerCase() == 'playlist'){
+            if (this.loggedIn){
+                if (tokens[1] && tokens[1] == "create" && tokens[2] && tokens.length == 3){
+                    var playName = tokens[2];
+                    const dataToSend = {
+                        key1: playName,
+                    };
+                    var checker = await this.playlistCreateHelper(dataToSend);
+                    if (checker){
+                        response = "Playlist " + playName + " has been created.";
+                    }
+                    else {
+                        response = "Playlist creation has failed.";
+                    }
+                }
+                if (tokens[1] && tokens[1] == "ls" && tokens.length == 2){
+                    const dataToSend = {
+                        key1: "username",
+                    };
+                    var array = await this.playlistDisplayHelper(dataToSend);
+                    var output = "";
+                    for (let x in array){
+                        output += array[x]+"\r\n";
+                    }
+                    response = output;
+                }
+
+                if (tokens[1] && tokens[1] == "cd" && tokens[2]){
+
+
+                    if (tokens[0] && tokens[0] == "add" && tokens[1]){
+                    
+                    }
+                    if (tokens[0] && tokens[0] == "view" && tokens[1]){
+                        
+                    }
+                    if (tokens[0] && tokens[0] == "delete" && tokens[1]){
+                        
+                    }
+                    if (tokens[0] && tokens[0] == "rename" && tokens[1]){
+                        
+                    }
+                }
+                
+            }
+            else {
+                response = "You can only create playlists when you're logged in."
+            }
         }
 
         // Login command
@@ -46,7 +127,7 @@ class Parser {
                     
                     console.log(response);
                     console.log(this.loggedIn);
-                    await this.helper(dataToSend,username);
+                    await this.loginhelper(dataToSend,username);
                     if (this.loggedIn){
                         response = "Welcome Back, " + username + "!";
                     }

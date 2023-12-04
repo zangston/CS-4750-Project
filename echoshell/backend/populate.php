@@ -2,6 +2,7 @@
 include '../connect-db.php';
 global $db;
 
+// populate song table (artist and song)
 function populateSong($song_id, $artist_id, $title, $year, $streams, $preduration, $trackNumber, $artist, $artist_followers) {
     global $db;
 
@@ -31,31 +32,46 @@ function populateSong($song_id, $artist_id, $title, $year, $streams, $preduratio
 
 }
 
-// function populateAlbum($username, $songTitle) {
-//     global $db;
-//
-//     $query = "INSERT INTO library_liked_songs VALUES (:username, (SELECT song_id FROM song WHERE song_title = :songTitle))";
-//
-//     $statement = $db->prepare($query);
-//     $statement->bindValue(':username', $username);
-//     $statement->bindValue(':songTitle', $songTitle);
-//     $statement->execute();
-//     $statement->closeCursor();
-//     $_SESSION["currUser"] = $username;
-// }
-//
-// function populateArtist($username, $songTitle) {
-//     global $db;
-//
-//     $query = "INSERT INTO library_liked_songs VALUES (:username, (SELECT song_id FROM song WHERE song_title = :songTitle))";
-//
-//     $statement = $db->prepare($query);
-//     $statement->bindValue(':username', $username);
-//     $statement->bindValue(':songTitle', $songTitle);
-//     $statement->execute();
-//     $statement->closeCursor();
-//     $_SESSION["currUser"] = $username;
-// }
+// populate album table (artist and album)
+function populateAlbum($album_id, $albumName, $year, $artist_id, $artist_name, $artist_followers) {
+    global $db;
+
+    // insert artist into artist table so that song can be added
+    $query = "INSERT INTO artist VALUES (:artist_id, :artist_name, :spotify_followers)";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':artist_id', $artist_id);
+    $statement->bindValue(':artist_name', $artist_name);
+    $statement->bindValue(':spotify_followers', $artist_followers);
+    $statement->execute();
+    $statement->closeCursor();
+
+    // insert album into the albums song
+    $query2 = "INSERT INTO album VALUES (:album_id, :album_title, :year, :artist)";
+
+    $statement2 = $db->prepare($query2);
+    $statement2->bindValue(':album_id', $album_id);
+    $statement2->bindValue(':album_title', $albumName);
+    $statement2->bindValue(':year', $year);
+    $statement2->bindValue(':artist', $artist_id);
+    $statement2->execute();
+    $statement2->closeCursor();
+}
+
+// populate artist table
+function populateArtist($artist_id, $artistName, $artist_followers) {
+    global $db;
+
+    // insert artist into artist table
+    $query = "INSERT INTO artist VALUES (:artist_id, :artist_name, :spotify_followers)";
+
+    $statement = $db->prepare($query);
+    $statement->bindValue(':artist_id', $artist_id);
+    $statement->bindValue(':artist_name', $artistName);
+    $statement->bindValue(':spotify_followers', $artist_followers);
+    $statement->execute();
+    $statement->closeCursor();
+}
 
 $jsonData = file_get_contents('php://input');
 
@@ -63,8 +79,6 @@ $jsonData = file_get_contents('php://input');
 $data = json_decode($jsonData, true);
 
 $realsearchType = $data['key1'];
-// $realsongTitle = $data['key2'];
-// $realcommand = $data['key3'];
 
 if ($realsearchType == "track") {
     $realsong_id = $data['key2'];
@@ -77,12 +91,17 @@ if ($realsearchType == "track") {
     $realartist = $data['key9'];
     $realartist_followers = $data['key10'];
     populateSong($realsong_id, $realartist_id, $realtitle, $realyear, $realstreams, $realpreduration, $realtrackNumber, $realartist, $realartist_followers);
+} else if ($realsearchType == "album") {
+    $realalbum_id = $data['key2'];
+    $realalbumName = $data['key3'];
+    $realyear = $data['key4'];
+    $realartist_id = $data['key5'];
+    $realartist_name = $data['key6'];
+    $realartist_followers = $data['key7'];
+    populateAlbum($realalbum_id, $realalbumName, $realyear, $realartist_id, $realartist_name, $realartist_followers);
+} else if ($realsearchType == "artist") {
+    $realartist_id = $data['key2'];
+    $realartistName = $data['key3'];
+    $realartist_followers = $data['key4'];
+    populateArtist($realartist_id, $realartistName, $realartist_followers);
 }
-// else if ($realsearchType == "album") {
-//     $realartist = $data['key2'];
-//     $realtitle = $data['key3'];
-//     $realyear = $data['key4'];
-//     $realduration = $data['key5'];
-//     $realtrackNumber = $data['key6'];
-//     populateSong($realartist, $realtitle, $realyear, $realduration, $realtrackNumber);
-// }

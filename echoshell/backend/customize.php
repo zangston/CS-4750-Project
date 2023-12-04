@@ -5,27 +5,21 @@ global $db;
 function customize($username, $fontColor) {
     global $db;
 
-    $query = "INSERT INTO library_liked_songs VALUES (:username, (SELECT song_id FROM song WHERE song_title = :songTitle))";
-
+    $query = "UPDATE user SET font_color = :fontColor WHERE username = :username";
     $statement = $db->prepare($query);
     $statement->bindValue(':username', $username);
-    $statement->bindValue(':songTitle', $songTitle);
+    $statement->bindValue(':fontColor', $fontColor);
     $statement->execute();
     $statement->closeCursor();
-    $_SESSION["currUser"] = $username;
 }
+
 
 $jsonData = file_get_contents('php://input');
 
 // Decode the JSON data
 $data = json_decode($jsonData, true);
 
-$realusername = $data['key1'];
-$realsongTitle = $data['key2'];
-$realcommand = $data['key3'];
+$realuser = $data['key1'];
+$realfontcolor = $data['key2'];
 
-if ($realcommand == "like") {
-    like($realusername,$realsongTitle);
-} else if ($realcommand == "unlike") {
-    unlike($realusername,$realsongTitle);
-}
+customize($realuser,$realfontcolor);

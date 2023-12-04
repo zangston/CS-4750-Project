@@ -194,11 +194,30 @@ class Parser {
 
         if (command.toLowerCase() == 'customize') {
             if(this.loggedIn) {
-                response = customizeDialogue(tokens[1].toLowerCase());
+                var color = customizeDialogue(tokens[1].toLowerCase());
                 
-                
+                const dataToSend = {
+                    key1: this.user,
+                    key2: color,
+                    };
 
-                response += "Font color changed\r\n"
+                fetch('backend/customize.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dataToSend)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Handle the response from the PHP backend
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+
+                response = color + "Font color changed\r\n"
             }
             else {
                 response = "Not logged in! Log in first to customize font color"

@@ -152,16 +152,17 @@ class Parser {
         }
 
         // Like/Unlike songs command
-        if (command.toLowerCase() == 'like') {
+        if (command.toLowerCase() == 'like' || command.toLowerCase() == 'unlike') {
             if (this.loggedIn) {
                 if (tokens[1] && tokens[1].toLowerCase() == '-song') {
                     var username = this.user;
-                    var songTitle = tokens.slice(2).join(' ')
+                    var songTitle = tokens.slice(2).join(' ').toLowerCase()
                     console.log(username);
                     console.log(songTitle);
                     const dataToSend = {
                         key1: username,
-                        key2: songTitle
+                        key2: songTitle,
+                        key3: command
                       };
                     fetch('backend/like.php', {
                         method: 'POST',
@@ -178,7 +179,11 @@ class Parser {
                         .catch(error => {
                           console.error('Error:', error);
                         });
-                    response = "Song added to liked songs!";
+                    if (command.toLowerCase() == 'like') {
+                        response = "Song added to liked songs!";
+                    } else if (command.toLowerCase() == 'unlike') {
+                        response = "Song removed from liked songs!";
+                    }
                 } else {
                     response = "Format incorrect. Use this format to like songs: like -song [song_title]";
                 }

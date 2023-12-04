@@ -23,8 +23,54 @@ class Parser {
         console.log(response);
     }
 
-    async viewLibHelper(dataToSend) {
-        let response = await fetch('backend/get-library.php', {
+    // display liked songs
+    async songLibHelper(dataToSend) {
+        let response = await fetch('backend/songLib.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+                })
+            let data = await response.json();
+            console.log(data);
+            var array = data.library;
+            return array
+    }
+
+    // display saved albums
+    async albumLibHelper(dataToSend) {
+        let response = await fetch('backend/albumLib.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+                })
+            let data = await response.json();
+            console.log(data);
+            var array = data.library;
+            return array
+    }
+
+    // display liked artists
+    async artistLibHelper(dataToSend) {
+        let response = await fetch('backend/artistLib.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+                })
+            let data = await response.json();
+            console.log(data);
+            var array = data.library;
+            return array
+    }
+
+    // display playlists
+    async playlistLibHelper(dataToSend) {
+        let response = await fetch('backend/playlistLib.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -346,60 +392,52 @@ class Parser {
             }
         }
 
-
-        // if (tokens[1] && tokens[1] == "ls" && tokens.length == 2){
-        //     const dataToSend = {
-        //         key1: "username",
-        //     };
-        //     var array = await this.playlistDisplayHelper(dataToSend);
-        //     var output = "";
-        //     for (let x in array){
-        //         output += array[x]+"\r\n";
-        //     }
-        //     response = output;
-        // }
-
         // view library command
         if (command.toLowerCase() == 'library') {
             if (!this.loggedIn) {
-                response = 'please login';
+                response = 'Please login';
             } else {
-                if (tokens.length == 2 && (tokens[1].toLowerCase() == '-s' || tokens[1].toLowerCase() == '-al' || tokens[1].toLowerCase() == '-ar' || tokens[1].toLowerCase() == '-p')) {
-                    response = "testing 123";
-                    // var libType = tokens[1];
-                    // var username = this.user
-                    // console.log(libType);
-                    // console.log(username);
+                if (tokens[1].toLowerCase() == '-s' && tokens.length == 2) {
                     const dataToSend = {
-                        key1: libType,
-                        key2: username
+                        key1: "username"
                     };
-                    var array = await this.viewLibHelper(dataToSend);
+                    var array = await this.songLibHelper(dataToSend);
                     var output = "";
                     for (let x in array) {
                         output += array[x] + "\r\n";
                     }
                     response = output;
-                    // fetch('backend/get-library.php', {
-                    //     method: 'GET',
-                    //     headers: {
-                    //         'Content-Type': 'application/json'
-                    //     },
-                    //     body: JSON.stringify(dataToSend)
-                    //     })
-                    //     .then(response => response.json())
-                    //     .then(data => {
-                    //         // Handle the response from the PHP backend
-                    //         console.log(data);
-                    //         let libList = data;
-
-                    //     })
-                    //     .catch(error => {
-                    //         console.error('Error:', error);
-                    //     });
-                    // response = "the end";
-                }
-                else {
+                } else if (tokens[1].toLowerCase() == '-al' && tokens.length == 2) {
+                    const dataToSend = {
+                        key1: "username"
+                    };
+                    var array = await this.albumLibHelper(dataToSend);
+                    var output = "";
+                    for (let x in array) {
+                        output += array[x] + "\r\n";
+                    }
+                    response = output;
+                } else if (tokens[1].toLowerCase() == '-ar' && tokens.length == 2) {
+                    const dataToSend = {
+                        key1: "username"
+                    };
+                    var array = await this.artistLibHelper(dataToSend);
+                    var output = "";
+                    for (let x in array) {
+                        output += array[x] + "\r\n";
+                    }
+                    response = output;
+                } else if (tokens[1].toLowerCase() == '-p' && tokens.length == 2) {
+                    const dataToSend = {
+                        key1: "username"
+                    };
+                    var array = await this.playlistDisplayHelper(dataToSend);
+                    var output = "";
+                    for (let x in array) {
+                        output += array[x] + "\r\n";
+                    }
+                    response = output;
+                } else {
                     response = "Please specify which library you would like to view: \r\n-s: view your liked songs\r\n-al: view your saved albums\r\n-ar: view artists you follow\r\n-p: view your playlists";
                 }
             }

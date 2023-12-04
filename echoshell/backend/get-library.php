@@ -8,6 +8,7 @@ $user = $_SESSION['currUser'];
 
 function getLib($libType, $username) {
     global $db
+    
     if ($libType == '-s') {
         $query = "SELECT * FROM library_liked_songs WHERE username = '$username'";
     } elseif ($libType == '-al') {
@@ -24,7 +25,7 @@ function getLib($libType, $username) {
     $results = $statement->fetchAll();
     $libList = array();
     foreach($results.serialize() as $entry) {
-        echo $entry . "<br/>";
+        // echo $entry . "<br/>";
         $libList[] = $entry
     }
     $statement->closeCursor();

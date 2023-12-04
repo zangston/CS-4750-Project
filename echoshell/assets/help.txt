@@ -7,3 +7,7 @@ playlist: open a menu for playlist. Example usage: (after inputing) playlist cd 
 search: search for a song, album, or artist. Example usage: search -song/-album/-artist [search term]
 customize: change the font color of the terminal. Example usage: customize [color]
     (available colors: red, green, yellow, blue, pink, purple, cyan, teal, white, gray)
+like/unlike: like or unlike songs. Example usage: like -song [song_title]
+save/unsave: save or unsave albums. Example usage: save -album [album_title]
+follow/unfollow: follow or unfollow artists. Example usage: follow -artist [artist_name]
+library: view liked songs, saved albums, followed artists, or your playlists: Example usage: library -s

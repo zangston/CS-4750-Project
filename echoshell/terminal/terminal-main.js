@@ -90,7 +90,8 @@ xterm.onKey(async (ev) => {
         currLine += ev.key;
         xterm.write(ev.key);
     }
-    });
+
+});
 
 function eraseLine() {
   xterm.write("\r\x1b[K");

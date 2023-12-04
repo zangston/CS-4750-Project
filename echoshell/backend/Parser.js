@@ -22,7 +22,20 @@ class Parser {
         console.log(this.loggedIn);
         console.log(response);
     }
-
+  
+    async colorHelper(dataToSend){
+        let response = await fetch('backend/getColor.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        var color_name = JSON.stringify(data.color);
+        return color_name;
+    }
+  
     //helper function for creating playlist
     async playlistCreateHelper(dataToSend){
         let response = await fetch('backend/playlistCreate.php', {
@@ -273,7 +286,9 @@ class Parser {
                     console.log(this.loggedIn);
                     await this.loginhelper(dataToSend,username);
                     if (this.loggedIn){
-                        response = "Welcome Back, " + username + "!";
+                        var color_name = await this.colorHelper(dataToSend);
+                        color_code = encodeColor(color_name.replace(/"/g, ''));
+                        response = color_code + "Welcome Back, " + username + "!";
                     }
                     else{
                         response = "Stop hacking me.";
@@ -295,7 +310,7 @@ class Parser {
         // Logout command
         if (command.toLowerCase() == 'logout') {
             this.loggedIn = false;
-            response = "Logout complete.";
+            response = "\x1b[0;32mLogout complete.";
         }
 
         // Signup command
@@ -412,6 +427,31 @@ class Parser {
                 }
             } else {
                 response = "You're not logged in! Log in first to like songs."
+            }
+        }
+
+        if (command.toLowerCase() == 'customize') {
+            if(this.loggedIn) {
+                var color = tokens[1].toLowerCase();
+                
+                const dataToSend = {
+                    key1: this.user,
+                    key2: color,
+                    };
+
+                fetch('backend/customize.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dataToSend)
+                });
+
+                var color_code = encodeColor(color.toLowerCase());
+                response = color_code + "Font color changed\r\n"
+            }
+            else {
+                response = "Not logged in! Log in first to customize font color"
             }
         }
 

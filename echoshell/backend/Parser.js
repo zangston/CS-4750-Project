@@ -111,6 +111,20 @@ class Parser {
         return stat
     }
 
+    async playlistViewHelper(dataToSend){
+        let response = await fetch('backend/viewPlaylist.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var array = data.playlists;
+        return array
+    }
+
 
     async parseInput(input) {
         var tokens = input.split(' ');
@@ -199,8 +213,17 @@ class Parser {
                     response = "Song failed to add."
                 }
             }
-            if (tokens[0] && tokens[0] == "view" && tokens[1]){
-                
+            if (tokens[0] && tokens[0] == "view"){
+                var playlistName = tokens[1];
+                const dataToSend = {
+                    key1: this.currPlay,
+                };
+                var array = await this.playlistViewHelper(dataToSend);
+                var output = "";
+                for (let x in array){
+                    output += array[x]+"\r\n";
+                }
+                response = output;
             }
             if (tokens[0] && tokens[0] == "delete" && tokens[1]){
                 var songName = tokens[1];

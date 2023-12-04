@@ -3,11 +3,11 @@ class Parser {
 
     constructor() {
         this.loggedIn = false;
-        this.user = null;
+        this.selected = false;
+        this.currPlay = "";
     }
 
-    async helper(dataToSend,username){
-        this.user = username
+    async loginhelper(dataToSend,username){
         let response = await fetch('backend/login.php', {
         method: 'POST',
         headers: {
@@ -22,7 +22,7 @@ class Parser {
         console.log(this.loggedIn);
         console.log(response);
     }
-
+  
     async colorHelper(dataToSend){
         let response = await fetch('backend/getColor.php', {
         method: 'POST',
@@ -35,8 +35,111 @@ class Parser {
         var color_name = JSON.stringify(data.color);
         return color_name;
     }
+  
+    //helper function for creating playlist
+    async playlistCreateHelper(dataToSend){
+        let response = await fetch('backend/playlistCreate.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var checking = data.status;
+        return checking
+    }
 
-    async parseInput(input, xterm) {
+    //helper function for displaying playlists
+    async playlistDisplayHelper(dataToSend){
+        let response = await fetch('backend/playlistDisplay.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var array = data.playlists;
+        return array
+    }
+
+    //helper function for displaying playlists
+    async cdHelper(dataToSend){
+        let response = await fetch('backend/cd.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var number = data.number;
+        return number
+    }
+
+    //helper function for renaming playlists
+    async renameHelper(dataToSend){
+        let response = await fetch('backend/rename.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var stat = data.status;
+        return stat
+    }
+
+    async addHelper(dataToSend){
+        let response = await fetch('backend/addPlaylist.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var stat = data.status;
+        return stat
+    }
+
+    async deleteHelper(dataToSend){
+        let response = await fetch('backend/deletePlaylist.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var stat = data.status;
+        return stat
+    }
+
+    async playlistViewHelper(dataToSend){
+        let response = await fetch('backend/viewPlaylist.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var array = data.playlists;
+        return array
+    }
+
+
+    async parseInput(input) {
         var tokens = input.split(' ');
         var command = tokens[0]
         var response = command + " is not recognized as a command";
@@ -45,6 +148,126 @@ class Parser {
         if (command.toLowerCase() == 'help') {
             response = await readFile("assets/help.txt") + "\r\n";
         }
+        
+        if (command.toLowerCase() == 'playlist'){
+            if (this.loggedIn){
+                if (tokens[1] && tokens[1] == "create" && tokens[2] && tokens.length == 3){
+                    var playName = tokens[2];
+                    const dataToSend = {
+                        key1: playName,
+                    };
+                    var checker = await this.playlistCreateHelper(dataToSend);
+                    if (checker){
+                        response = "Playlist " + playName + " has been created.";
+                    }
+                    else {
+                        response = "Playlist creation has failed.";
+                    }
+                }
+                if (tokens[1] && tokens[1] == "ls" && tokens.length == 2){
+                    const dataToSend = {
+                        key1: "username",
+                    };
+                    var array = await this.playlistDisplayHelper(dataToSend);
+                    var output = "";
+                    for (let x in array){
+                        output += array[x]+"\r\n";
+                    }
+                    response = output;
+                }
+
+                if (tokens[1] && tokens[1] == "cd" && tokens[2] && tokens.length == 3){
+                    if (!this.selected){
+                        var playlistName = tokens[2];
+                        const dataToSend = {
+                            key1: playlistName,
+                        };
+                        var numPlaylist = await this.cdHelper(dataToSend);
+                        if (!numPlaylist){
+                            response = "You cannot cd into a playlist that doesn't exist.";
+                        }
+                        else {
+                            this.selected = true;
+                            this.currPlay = playlistName;
+                            response = "Successfully cd'd into " + playlistName;
+                        }
+                    }
+                    else{
+                        if (tokens[2] == ".."){
+                            this.selected = false;
+                            this.currPlay = "";
+                            response = "Successfully exited playlist.";
+                        }
+                        else{
+                            response = "You cannot cd while in a playlist.";
+                        }    
+                    }   
+                }
+                
+            }
+            else {
+                response = "You can only create playlists when you're logged in."
+            }
+        }
+
+        //playlist subcommands
+        if (this.selected){
+            if (tokens[0] && tokens[0] == "add" && tokens[1]){
+                var songName = tokens[1];
+                const dataToSend = {
+                    key1: songName,
+                    key2: this.currPlay
+                };
+                var diditAdd = await this.addHelper(dataToSend);
+                if (diditAdd){
+                    response = "Song: " + songName + " has been added to " + this.currPlay + ".";
+                }
+                else {
+                    response = "Song failed to add."
+                }
+            }
+            if (tokens[0] && tokens[0] == "view"){
+                var playlistName = tokens[1];
+                const dataToSend = {
+                    key1: this.currPlay,
+                };
+                var array = await this.playlistViewHelper(dataToSend);
+                var output = "";
+                for (let x in array){
+                    output += array[x]+"\r\n";
+                }
+                response = output;
+            }
+            if (tokens[0] && tokens[0] == "delete" && tokens[1]){
+                var songName = tokens[1];
+                const dataToSend = {
+                    key1: songName,
+                    key2: this.currPlay
+                };
+                var diditDelete = await this.deleteHelper(dataToSend);
+                if (diditDelete){
+                    response = "Song: " + songName + " has been removed from " + this.currPlay + ".";
+                }
+                else {
+                    response = "Song failed to add."
+                }
+            }
+            if (tokens[0] && tokens[0] == "rename" && tokens[1]){
+                var newName = tokens[1];
+                const dataToSend = {
+                    key1: newName,
+                    key2: this.currPlay
+                };
+                var renamed = await this.renameHelper(dataToSend);
+                if (renamed == true){
+                    this.currplay = newName;
+                    response = "Successfully renamed playlist to " + newName; 
+                }
+                else {
+                    response = "Renaming process failed."
+                }
+            }
+        } 
 
         // Login command
         if (command.toLowerCase() == 'login') {
@@ -61,7 +284,7 @@ class Parser {
                     
                     console.log(response);
                     console.log(this.loggedIn);
-                    await this.helper(dataToSend,username);
+                    await this.loginhelper(dataToSend,username);
                     if (this.loggedIn){
                         var color_name = await this.colorHelper(dataToSend);
                         color_code = encodeColor(color_name.replace(/"/g, ''));

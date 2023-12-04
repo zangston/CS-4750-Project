@@ -11,6 +11,8 @@ var currLine = "";
 var entries = [];
 var historyIndex = 0;
 var maxHistoryIndex;
+var cdTrue = false;
+var playlistNamed = "";
 
 xterm.onKey(async (ev) => {
     // Enter: create new line
@@ -22,9 +24,26 @@ xterm.onKey(async (ev) => {
 
         // Send cmd to backend parser
         const response = await p.parseInput(currLine);
-
-        currLine = "";
-        xterm.write(response + "\r\nEchoshell $ ");
+        var tokens1 = response.split(' ');
+        if (tokens1[0] && tokens1[0] == "Successfully", tokens1[1] && tokens1[1] == "cd'd"){
+            cdTrue = true;
+            playlistNamed = tokens1[3];
+        }
+        else if(tokens1[0] && tokens1[0] == "Successfully", tokens1[1] && tokens1[1] == "exited"){
+            cdTrue = false;
+            playlistNamed = "";
+        }
+        else if(tokens1[0] && tokens1[0] == "Successfully", tokens1[1] && tokens1[1] == "renamed"){
+            playlistNamed = tokens1[4];
+        }
+        if (cdTrue){
+            currLine = "";
+            xterm.write(response + "\r\nEchoshell/" + playlistNamed + " $ ");
+        }
+        else{
+            currLine = "";
+            xterm.write(response + "\r\nEchoshell $ ");
+        } 
         }
     }
     // Backspace: move cursor backward, erase character

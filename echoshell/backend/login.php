@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../connect-db.php';
 global $db;
 global $check;
@@ -15,7 +16,7 @@ function log_in($user, $pswd){
     if (password_verify($pswd, $storedPassword[0])) {
     $_SESSION["currUser"] = $user;
     $check = true;
-}
+    }
     $statement->closeCursor();
 }
 

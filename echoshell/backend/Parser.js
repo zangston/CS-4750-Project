@@ -23,6 +23,19 @@ class Parser {
         console.log(response);
     }
 
+    async colorHelper(dataToSend){
+        let response = await fetch('backend/getColor.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        var color_name = JSON.stringify(data.color);
+        return color_name;
+    }
+
     async parseInput(input, xterm) {
         var tokens = input.split(' ');
         var command = tokens[0]
@@ -50,7 +63,9 @@ class Parser {
                     console.log(this.loggedIn);
                     await this.helper(dataToSend,username);
                     if (this.loggedIn){
-                        response = "Welcome Back, " + username + "!";
+                        var color_name = await this.colorHelper(dataToSend);
+                        color_code = encodeColor(color_name.replace(/"/g, ''));
+                        response = color_code + "Welcome Back, " + username + "!";
                     }
                     else{
                         response = "Stop hacking me.";

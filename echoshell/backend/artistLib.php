@@ -8,8 +8,7 @@ $user = $_SESSION['currUser'];
 function getLib($username) {
     global $db;
 
-    
-    $query = "SELECT artist_id FROM library_artists WHERE username = :username";
+    $query = "SELECT artist_name FROM artist, ( SELECT artist_id FROM library_artists WHERE username = :username ) AS liked WHERE artist.artist_id = liked.artist_id"
 
     $statement = $db->prepare($query);    
     $statement->bindValue(':username', $username);

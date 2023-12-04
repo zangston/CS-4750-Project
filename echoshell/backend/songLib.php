@@ -8,7 +8,8 @@ function getLib($username) {
     global $db;
 
     
-    $query = "SELECT song_id FROM library_liked_songs WHERE username = :username";
+    $query = "SELECT song_title FROM `song`, ( SELECT song_id FROM library_liked_songs WHERE username = :username ) AS liked WHERE song.song_id = liked.song_id";
+    // "SELECT song_title FROM library_liked_songs WHERE username = :username";
 
     $statement = $db->prepare($query);    
     $statement->bindValue(':username', $username);
@@ -18,7 +19,7 @@ function getLib($username) {
     $library = array(); 
 
     while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-        $library[] = $row['song_id']; 
+        $library[] = $row['song_title']; 
     }
 
     $statement->closeCursor();

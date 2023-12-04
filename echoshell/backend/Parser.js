@@ -432,6 +432,48 @@ class Parser {
             }
         }
 
+        // Save/Unsave songs command
+        if (command.toLowerCase() == 'save' || command.toLowerCase() == 'unsave') {
+            if (this.loggedIn) {
+                if (tokens[1] && tokens[1].toLowerCase() == '-album') {
+                    var username = this.user;
+                    var albumTitle = tokens.slice(2).join(' ').toLowerCase()
+                    console.log(username);
+                    console.log(albumTitle);
+                    const dataToSend = {
+                        key1: username,
+                        key2: albumTitle,
+                        key3: command
+                      };
+                    fetch('backend/save.php', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dataToSend)
+                      })
+                        .then(response => response.json())
+                        .then(data => {
+                          // Handle the response from the PHP backend
+                          console.log(data);
+                        })
+                        .catch(error => {
+                          console.error('Error:', error);
+                        });
+                    if (command.toLowerCase() == 'save') {
+                        response = "Album added to saved albums!";
+                    } else if (command.toLowerCase() == 'unsave') {
+                        response = "Album removed from saved albums!";
+                    }
+                } else {
+                    response = "Format incorrect. Use this format to save albums: save -album [album_title]";
+                }
+            } else {
+                response = "You're not logged in! Log in first to save albums."
+            }
+        }
+
+        // Customize font color
         if (command.toLowerCase() == 'customize') {
             if(this.loggedIn) {
                 var color = tokens[1].toLowerCase();

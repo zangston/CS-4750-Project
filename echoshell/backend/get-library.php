@@ -4,13 +4,13 @@ global $db;
 
 function getLib($libType, $username) {
     global $db
-    if ($libType == 'songs') {
+    if ($libType == '-s') {
         $query = "SELECT * FROM library_liked_songs WHERE username = '$username'";
-    } elseif ($libType == 'albums') {
+    } elseif ($libType == '-al') {
         $query = "SELECT * FROM library_saved_albums WHERE username = '$username'";
-    } elseif ($libType == 'artists') {
+    } elseif ($libType == '-ar') {
         $query = "SELECT * FROM library_artists WHERE username = '$username'";
-    } elseif ($libType == 'playlists') {
+    } elseif ($libType == '-p') {
         $query = "SELECT * FROM library_playlists WHERE username = '$username'";
     }
     $statement = $db->prepare($query);
@@ -28,5 +28,18 @@ $data = json_decode($jsonData, true);
 $type = $data['key1'];
 $username = $data['key2'];
 
-getLib($type, $username);
+if ($type == '-s') {
+    $whichLib = "Liked Songs";
+} elseif ($type == '-al') {
+    $whichLib = "Saved Albums";
+} elseif ($type == '-ar') {
+    $whichLib = "Liked Artists";
+} elseif ($type == '-p') {
+    $whichLib = "Your Playlists";
+}
+
+$libList = getLib($type, $username);
+echo $whichLib;
+foreach ($libList as $entry):
+    echo $entry . "<br/>";
 ?>

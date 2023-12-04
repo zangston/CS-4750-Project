@@ -72,12 +72,7 @@ class Parser {
         // Logout command
         if (command.toLowerCase() == 'logout') {
             this.loggedIn = false;
-<<<<<<< HEAD
-            this.user = null;
-            response = "logout complete.";
-=======
             response = "Logout complete.";
->>>>>>> main
         }
 
         // Signup command
@@ -154,44 +149,7 @@ class Parser {
             else {
                 response = "You're not logged in! Log in first to search for songs, albums, or artists."
             }
-      
-        // view library command
-        if (command.toLowerCase() == 'library') {
-            if (!this.loggedIn) {
-                response = 'please login';
-            } else {
-                if (tokens.length != 2 || tokens[1] != '-s' || tokens[1] != '-al' || tokens[1] != '-ar' || tokens[1] != '-p' ||) {
-                    response = "Please specify which library you would like to view: \r\n-s: view your liked songs\r\n-al: view your saved albums\r\n-ar: view artists you follow\r\n-p: view your playlists";
-                }
-                else {
-                    response = "testing 123"
-                    var libType = tokens[1];
-                    var username = this.user
-                    const dataToSend = {
-                        key1: libType,
-                        key2: username
-                    };
-                    fetch('backend/get-library.php', {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(dataToSend)
-                      })
-                        .then(response => response.json())
-                        .then(data => {
-                          // Handle the response from the PHP backend
-                          console.log(data);
-                        })
-                        .catch(error => {
-                          console.error('Error:', error);
-                        });
-                }
-            }
         }
-<<<<<<< HEAD
-  }
-=======
 
         // Like/Unlike songs command
         if (command.toLowerCase() == 'like' || command.toLowerCase() == 'unlike') {
@@ -234,8 +192,41 @@ class Parser {
             }
         }
 
->>>>>>> main
+        // view library command
+        if (command.toLowerCase() == 'library') {
+            if (!this.loggedIn) {
+                response = 'please login';
+            } else {
+                if (tokens.length != 2 || tokens[1] != '-s' || tokens[1] != '-al' || tokens[1] != '-ar' || tokens[1] != '-p') {
+                    response = "Please specify which library you would like to view: \r\n-s: view your liked songs\r\n-al: view your saved albums\r\n-ar: view artists you follow\r\n-p: view your playlists";
+                }
+                else {
+                    response = "testing 123"
+                    var libType = tokens[1];
+                    var username = this.user
+                    const dataToSend = {
+                        key1: libType,
+                        key2: username
+                    };
+                    fetch('backend/get-library.php', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dataToSend)
+                      })
+                        .then(response => response.json())
+                        .then(data => {
+                          // Handle the response from the PHP backend
+                          console.log(data);
+                        })
+                        .catch(error => {
+                          console.error('Error:', error);
+                        });
+                }
+            }
+        }
+
         return Promise.resolve(response);
-    
     }
 }

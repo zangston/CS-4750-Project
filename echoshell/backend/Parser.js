@@ -72,7 +72,7 @@ class Parser {
         // Logout command
         if (command.toLowerCase() == 'logout') {
             this.loggedIn = false;
-            response = "Logout complete.";
+            response = "\x1b[0;32mLogout complete.";
         }
 
         // Signup command

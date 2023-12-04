@@ -5,6 +5,7 @@ class Parser {
         this.loggedIn = false;
         this.selected = false;
         this.currPlay = "";
+        this.user = null;
     }
 
     async loginhelper(dataToSend,username){
@@ -251,6 +252,7 @@ class Parser {
                     await this.loginhelper(dataToSend,username);
                     if (this.loggedIn){
                         response = "Welcome Back, " + username + "!";
+                        this.user = username;
                     }
                     else{
                         response = "Stop hacking me.";
@@ -272,6 +274,7 @@ class Parser {
         // Logout command
         if (command.toLowerCase() == 'logout') {
             this.loggedIn = false;
+            this.user = null;
             response = "Logout complete.";
         }
 
@@ -394,12 +397,12 @@ class Parser {
 
         // view library command
         if (command.toLowerCase() == 'library') {
-            if (!this.loggedIn) {
-                response = 'Please login';
-            } else {
+            if (this.loggedIn) {
+                var currUser = this.user;
+                console.log(currUser);
                 if (tokens[1].toLowerCase() == '-s' && tokens.length == 2) {
                     const dataToSend = {
-                        key1: "username"
+                        key1: currUser
                     };
                     var array = await this.songLibHelper(dataToSend);
                     var output = "";
@@ -409,7 +412,7 @@ class Parser {
                     response = output;
                 } else if (tokens[1].toLowerCase() == '-al' && tokens.length == 2) {
                     const dataToSend = {
-                        key1: "username"
+                        key1: currUser
                     };
                     var array = await this.albumLibHelper(dataToSend);
                     var output = "";
@@ -419,7 +422,7 @@ class Parser {
                     response = output;
                 } else if (tokens[1].toLowerCase() == '-ar' && tokens.length == 2) {
                     const dataToSend = {
-                        key1: "username"
+                        key1: currUser
                     };
                     var array = await this.artistLibHelper(dataToSend);
                     var output = "";
@@ -440,6 +443,8 @@ class Parser {
                 } else {
                     response = "Please specify which library you would like to view: \r\n-s: view your liked songs\r\n-al: view your saved albums\r\n-ar: view artists you follow\r\n-p: view your playlists";
                 }
+            } else {
+                response = 'Please login';
             }
         }
 

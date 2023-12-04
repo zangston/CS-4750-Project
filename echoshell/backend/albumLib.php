@@ -3,11 +3,12 @@ session_start();
 include '../connect-db.php';
 global $db;
 
-$user = $_SESSION['currUser'];
+
 function getLib($username) {
     global $db;
+
     
-    $query = "SELECT album_id FROM ibrary_saved_albums WHERE username = :username";
+    $query = "SELECT album_id FROM library_saved_albums WHERE username = :username";
 
     $statement = $db->prepare($query);    
     $statement->bindValue(':username', $username);
@@ -23,6 +24,7 @@ function getLib($username) {
     $statement->closeCursor();
     return $library;
 }
+$user = $data['key1'];
 
 $result = getLib($user);
 

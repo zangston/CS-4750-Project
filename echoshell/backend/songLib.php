@@ -6,8 +6,9 @@ global $db;
 $user = $_SESSION['currUser'];
 function getLib($username) {
     global $db;
+
     
-    $query = "SELECT song_id FROM ibrary_liked_songs WHERE username = :username";
+    $query = "SELECT song_id FROM library_liked_songs WHERE username = :username";
 
     $statement = $db->prepare($query);    
     $statement->bindValue(':username', $username);
@@ -23,6 +24,7 @@ function getLib($username) {
     $statement->closeCursor();
     return $library;
 }
+// $user = $data['key1'];
 
 $result = getLib($user);
 

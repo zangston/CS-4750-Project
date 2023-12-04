@@ -33,6 +33,9 @@ xterm.onKey(async (ev) => {
             cdTrue = false;
             playlistNamed = "";
         }
+        else if(tokens1[0] && tokens1[0] == "Successfully", tokens1[1] && tokens1[1] == "renamed"){
+            playlistNamed = tokens1[4];
+        }
         if (cdTrue){
             currLine = "";
             xterm.write(response + "\r\nEchoshell/" + playlistNamed + " $ ");

@@ -68,9 +68,9 @@ class Parser {
         return number
     }
 
-    //helper function for displaying playlists
-    async cdHelper(dataToSend){
-        let response = await fetch('backend/cd.php', {
+    //helper function for renaming playlists
+    async renameHelper(dataToSend){
+        let response = await fetch('backend/rename.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -79,9 +79,38 @@ class Parser {
             })
         let data = await response.json();
         console.log(data);
-        var number = data.number;
-        return number
+        var stat = data.status;
+        return stat
     }
+
+    async addHelper(dataToSend){
+        let response = await fetch('backend/addPlaylist.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var stat = data.status;
+        return stat
+    }
+
+    async deleteHelper(dataToSend){
+        let response = await fetch('backend/deletePlaylist.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+            })
+        let data = await response.json();
+        console.log(data);
+        var stat = data.status;
+        return stat
+    }
+
 
     async parseInput(input) {
         var tokens = input.split(' ');
@@ -145,26 +174,7 @@ class Parser {
                         else{
                             response = "You cannot cd while in a playlist.";
                         }    
-                    }
-                    if (this.selected){
-                        if (tokens[1] && tokens[1] == "add" && tokens[2]){
-                        
-                        }
-                        if (tokens[1] && tokens[1] == "view" && tokens[2]){
-                            
-                        }
-                        if (tokens[1] && tokens[1] == "delete" && tokens[2]){
-                            
-                        }
-                        if (tokens[1] && tokens[1] == "rename" && tokens[2]){
-                            var newName = tokens[2];
-                            const dataToSend = {
-                            key1: newName,
-                            key2: this.currPlay
-                        };
-                        var numPlaylist = await this.cdHelper(dataToSend);
-                        }
-                    }    
+                    }   
                 }
                 
             }
@@ -172,6 +182,56 @@ class Parser {
                 response = "You can only create playlists when you're logged in."
             }
         }
+
+        //playlist subcommands
+        if (this.selected){
+            if (tokens[0] && tokens[0] == "add" && tokens[1]){
+                var songName = tokens[1];
+                const dataToSend = {
+                    key1: songName,
+                    key2: this.currPlay
+                };
+                var diditAdd = await this.addHelper(dataToSend);
+                if (diditAdd){
+                    response = "Song: " + songName + " has been added to " + this.currPlay + ".";
+                }
+                else {
+                    response = "Song failed to add."
+                }
+            }
+            if (tokens[0] && tokens[0] == "view" && tokens[1]){
+                
+            }
+            if (tokens[0] && tokens[0] == "delete" && tokens[1]){
+                var songName = tokens[1];
+                const dataToSend = {
+                    key1: songName,
+                    key2: this.currPlay
+                };
+                var diditDelete = await this.deleteHelper(dataToSend);
+                if (diditDelete){
+                    response = "Song: " + songName + " has been removed from " + this.currPlay + ".";
+                }
+                else {
+                    response = "Song failed to add."
+                }
+            }
+            if (tokens[0] && tokens[0] == "rename" && tokens[1]){
+                var newName = tokens[1];
+                const dataToSend = {
+                    key1: newName,
+                    key2: this.currPlay
+                };
+                var renamed = await this.renameHelper(dataToSend);
+                if (renamed == true){
+                    this.currplay = newName;
+                    response = "Successfully renamed playlist to " + newName; 
+                }
+                else {
+                    response = "Renaming process failed."
+                }
+            }
+        } 
 
         // Login command
         if (command.toLowerCase() == 'login') {

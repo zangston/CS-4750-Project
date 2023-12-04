@@ -194,10 +194,9 @@ class Parser {
 
         if (command.toLowerCase() == 'customize') {
             if(this.loggedIn) {
-                response = customizeDialogue(tokens[1]);
+                response = customizeDialogue(tokens[1].toLowerCase());
                 
-
-
+                
 
                 response += "Font color changed\r\n"
             }

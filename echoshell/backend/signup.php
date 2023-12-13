@@ -8,7 +8,7 @@ function sign_up($user, $pswd, $fullName){
     $shuffledPW = password_hash($pswd, PASSWORD_DEFAULT);
     $streams = 0;
     $bgcolor = "FFFFFFF";
-    $fontcolor = "\x1B[0;32m";
+    $fontcolor = "green";
     $query = "INSERT INTO user VALUES (:username, :name, :password, :date_joined, :streams, :background_color, :font_color)";
 
     $statement = $db->prepare($query); 

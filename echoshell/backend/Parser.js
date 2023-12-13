@@ -444,6 +444,7 @@ class Parser {
                           console.error('Error:', error);
                         });
                     //TODO: Push tuple to database
+                    this.user = user;
                     response = "Welcome " + user + "!";
                     this.loggedIn = true;
                 } else {
